@@ -14,12 +14,12 @@ public class PlatilloDAO {
     }
 
     // Recupera platillos asociados a cada orden (Paso 3 del Flujo Normal) 
-    /**public List<Platillo> obtenerPlatillosPorOrden(int idOrden) throws SQLException {
+    public List<Platillo> obtenerPlatillosPorOrden(int idOrden) throws SQLException {
         List<Platillo> listaPlatillos = new ArrayList<>();
         // Relaciona la tabla detalle con la tabla platillo para obtener el nombre [cite: 2, 23]
-        String sql = "SELECT p.nombre, dp.cantidad FROM Detalle_Orden dp " +
-                     "JOIN Platillo p ON dp.id_platillo = p.id_platillo " +
-                     "WHERE dp.id_orden = ?";
+        String sql = "SELECT p.nombre, dp.cantidad FROM detallePedidos dp " +
+                     "JOIN platillos p ON dp.idPlatillo = p.idPlatillo " +
+                     "WHERE dp.idPedido = ?";
 
         try (PreparedStatement ps = conexion.prepareStatement(sql)) {
             ps.setInt(1, idOrden);
@@ -35,18 +35,6 @@ public class PlatilloDAO {
             throw new SQLException("Error al recuperar detalles del platillo: " + e.getMessage());
         }
         return listaPlatillos;
-    } */
-    
-    public List<Platillo> obtenerPlatillosPorOrden(int idOrden) throws SQLException {
-    List<Platillo> listaPlatillos = new ArrayList<>();
-    
-    // Simulación de los platillos que el mesero capturó [cite: 30]
-    Platillo p1 = new Platillo();
-    p1.setNombre("Enchiladas");
-    p1.setCantidad(2);
-    
-    listaPlatillos.add(p1);
-    return listaPlatillos;
-}
+    }
 }
     

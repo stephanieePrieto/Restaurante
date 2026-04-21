@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="650.0" style="-fx-background-color: linear-gradient(to bottom right, #00BFFF, #0055A4);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemarestaurante.RegistroPlatilloController">
+<AnchorPane prefHeight="500.0" prefWidth="650.0" style="-fx-background-color: linear-gradient(to bottom right, #00BFFF, #0055A4);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.restaurante.controller.RegistroPlatilloController">
    <children>
       <VBox alignment="TOP_CENTER" layoutX="50.0" layoutY="25.0" prefHeight="450.0" prefWidth="550.0" spacing="15.0" style="-fx-background-color: #FFF8E1; -fx-background-radius: 25; -fx-padding: 25; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 15, 0, 0, 8);">
          <children>

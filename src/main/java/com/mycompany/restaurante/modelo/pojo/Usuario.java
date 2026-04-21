@@ -1,4 +1,4 @@
-package sistemarestaurante;
+package com.mycompany.restaurante.modelo.pojo;
 
 public class Usuario {
     private String username;

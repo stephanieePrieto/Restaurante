@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #3db1ff;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.restaurante.controller.DashboardController">
+   <children>
+      <VBox layoutX="168.0" layoutY="85.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #3db1ff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox prefHeight="80.0" prefWidth="1024.0" style="-fx-background-color: #3db1ff;">
+               <children>
+                  <ImageView fitHeight="113.0" fitWidth="161.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/pizzero.png" />
+                     </image>
+                  </ImageView>
+                  <Label alignment="CENTER" prefHeight="51.0" prefWidth="1025.0" style="-fx-background-color: #3db1ff;" text="RESTAURANTE PANEL DE CONTROL" textAlignment="CENTER" textFill="WHITE">
+                     <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </padding>
+                     <font>
+                        <Font name="Comic Sans MS Bold" size="34.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="113.0" fitWidth="161.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/pizzero.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+            <ScrollPane fitToWidth="true" prefHeight="657.0" prefWidth="1024.0" style="-fx-background-color: #005a96;">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="707.0" prefWidth="1009.0" style="-fx-background-color: #005a96;">
+                     <children>
+                        <HBox layoutY="5.0" prefHeight="55.0" prefWidth="1024.0" spacing="10.0" style="-fx-background-color: #3db1ff;">
+                           <children>
+                              <Label fx:id="lblSeccionGerente" alignment="CENTER" prefHeight="58.0" prefWidth="160.0" text="GERENTE" textAlignment="CENTER" textFill="WHITE">
+                                 <padding>
+                                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                 </padding>
+                                 <HBox.margin>
+                                    <Insets left="90.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblSeccionRecepcionista" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="58.0" prefWidth="160.0" text="RECEPCIONISTA" textAlignment="CENTER" textFill="WHITE">
+                                 <padding>
+                                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                 </padding>
+                                 <HBox.margin>
+                                    <Insets left="50.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblSeccionCajero" alignment="CENTER" layoutX="121.0" layoutY="10.0" prefHeight="58.0" prefWidth="160.0" text="CAJERO" textAlignment="CENTER" textFill="WHITE">
+                                 <padding>
+                                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                 </padding>
+                                 <HBox.margin>
+                                    <Insets left="50.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblSeccionMesero" alignment="CENTER" layoutX="232.0" layoutY="10.0" prefHeight="58.0" prefWidth="160.0" text="MESERO" textAlignment="CENTER" textFill="WHITE">
+                                 <padding>
+                                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                 </padding>
+                                 <HBox.margin>
+                                    <Insets left="60.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <TilePane alignment="CENTER" hgap="25.0" layoutX="-1.0" layoutY="74.0" prefColumns="3" prefHeight="598.0" prefTileHeight="180.0" prefTileWidth="200.0" prefWidth="1010.0" style="-fx-background-color: #005a96;" styleClass="boton-pinguino" stylesheets="@../styles/styles.css" vgap="5.0">
+                           <padding>
+                              <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+                           </padding>
+                           <children>
+                              <Button fx:id="btnAltaMenu" contentDisplay="TOP" mnemonicParsing="false" prefHeight="140.0" prefWidth="160.0" styleClass="boton-pinguino" stylesheets="@../styles/styles.css" text="ALTA DE MENÚ">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font></Button>
+                              <Button fx:id="btnReservaciones" contentDisplay="TOP" mnemonicParsing="false" prefHeight="140.0" prefWidth="160.0" styleClass="boton-pinguino" stylesheets="@../styles/styles.css" text="RESERVACIONES">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font></Button>
+                              <Button fx:id="btnCobro" mnemonicParsing="false" prefHeight="140.0" prefWidth="160.0" styleClass="boton-pinguino" stylesheets="@../styles/styles.css" text="COBRO">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font></Button>
+                              <Button fx:id="btnCapturar" mnemonicParsing="false" prefHeight="140.0" prefWidth="160.0" styleClass="boton-pinguino" stylesheets="@../styles/styles.css" text="CAPTURAR PEDIDO">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font></Button>
+                              <Button fx:id="btnEmpleados" mnemonicParsing="false" prefHeight="140.0" prefWidth="160.0" styleClass="boton-pinguino" stylesheets="@../styles/styles.css" text="EMPLEADOS">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font></Button>
+                              <Button fx:id="btnAsignar" mnemonicParsing="false" prefHeight="140.0" prefWidth="160.0" styleClass="boton-pinguino" stylesheets="@../styles/styles.css" text="ASIGNAR MESA">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font></Button>
+                              <Button fx:id="btnGenerar" mnemonicParsing="false" prefHeight="140.0" prefWidth="160.0" styleClass="boton-pinguino" stylesheets="@../styles/styles.css" text="GENERAR CUENTA">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font></Button>
+                              <Button fx:id="btnEstado" mnemonicParsing="false" prefHeight="140.0" prefWidth="160.0" styleClass="boton-pinguino" stylesheets="@../styles/styles.css" text="ESTADO DE MESAS">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font></Button>
+                              <MenuButton fx:id="mbControl" alignment="CENTER" mnemonicParsing="false" prefHeight="140.0" prefWidth="160.0" styleClass="boton-pinguino" stylesheets="@../styles/styles.css" text="CONTROL" textAlignment="CENTER">
+                                <items>
+                                  <MenuItem fx:id="miReporteVentas" mnemonicParsing="false" text="REPORTE DE VENTAS" />
+                                  <MenuItem fx:id="miReporteAlmacen" mnemonicParsing="false" text="ALMACÉN" />
+                                </items>
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </MenuButton>
+                              <Button fx:id="btnLista" contentDisplay="TOP" mnemonicParsing="false" prefHeight="140.0" prefWidth="160.0" styleClass="boton-pinguino" stylesheets="@../styles/styles.css" text="LISTA DE ESPERA">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font></Button>
+                              <Button fx:id="btnFacturacion" contentDisplay="TOP" mnemonicParsing="false" prefHeight="140.0" prefWidth="160.0" styleClass="boton-pinguino" stylesheets="@../styles/styles.css" text="FACTURACIÓN">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font></Button>
+                              <MenuButton fx:id="mbGestionOrdenes" alignment="CENTER" mnemonicParsing="false" prefHeight="140.0" prefWidth="160.0" styleClass="boton-pinguino" stylesheets="@../styles/styles.css" text="GESTIÓN DE ÓRDENES" textAlignment="CENTER">
+                                 <items>
+                                    <MenuItem fx:id="miOrdenesListas" mnemonicParsing="false" text="ÓRDENES LISTAS" />
+                                    <MenuItem fx:id="miCancelarPedido" mnemonicParsing="false" text="CANCELACIONNES" />
+                                 </items>
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </MenuButton>
+                           </children>
+                        </TilePane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </ScrollPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

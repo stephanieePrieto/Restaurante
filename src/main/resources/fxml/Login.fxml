@@ -27,7 +27,7 @@
                   <Label text="PIZZATRON 3000" textFill="#FF8F00">
                      <font><Font name="System Bold" size="24.0" /></font>
                   </Label>
-                  <Label text="ACCESO RESTRINGIDO" textFill="#37474F">
+                  <Label text="IDENTIFÍCATE" textFill="#37474F">
                      <font><Font name="System Bold" size="13.0" /></font>
                   </Label>
                </children>

@@ -2,7 +2,7 @@ package com.mycompany.restaurante.modelo.pojo;
 
 public class Pago {
 
-    private int idPedido;   // 🔥 AGREGAR
+    private int idPedido; 
     private double monto;
     private String metodo;
 

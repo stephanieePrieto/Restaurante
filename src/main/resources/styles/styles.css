@@ -310,3 +310,42 @@ settingsRadioButton:selected .radio > .dot {
 .combo-box .list-cell:hover{
     -fx-background-color:#4F4557;
 }
+
+/* 1. Estilo normal del botón (como ya lo tienes) */
+.boton-pinguino {
+    -fx-background-color: #fff9e3; /* Crema claro */
+    -fx-background-radius: 25;
+    -fx-border-color: #555555;     /* Borde oscuro fino normal */
+    -fx-border-radius: 25;
+    -fx-border-width: 2;
+    -fx-font-family: "Arial Rounded MT Bold", "Arial", sans-serif;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-cursor: hand;
+    -fx-text-alignment: center;
+    
+    /* Pequeña transición para que el cambio de color no sea brusco */
+    -fx-transition: all 0.2s ease-in-out; 
+}
+
+/* 2. Efecto Hover (cuando pasas el mouse) - Lo mantenemos sutil */
+.boton-pinguino:hover {
+    -fx-background-color: #fdf2c5; 
+}
+
+/* 3. EL EFECTO DE LA IMAGEN (Cuando está seleccionado/enfocado) */
+.boton-pinguino:focused {
+    /* Fondo se vuelve blanco o crema muy claro */
+    -fx-background-color: #fdf2c5; 
+    
+    /* El borde se vuelve VERDE y GRUESO como en la imagen */
+    -fx-border-color: #4CAF50; /* Un verde vibrante tipo Club Penguin */
+    -fx-border-width: 5;       /* Aumentamos el grosor considerablemente */
+    
+    /* Importante: el radio del borde debe seguir al del fondo */
+    -fx-border-radius: 25;
+    -fx-background-radius: 25;
+    
+    /* Opcional: Un pequeño brillo verde para que resalte más */
+    -fx-effect: dropshadow(three-pass-box, rgba(76, 175, 80, 0.5), 10, 0, 0, 0);
+}

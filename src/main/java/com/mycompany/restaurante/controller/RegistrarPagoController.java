@@ -1,4 +1,4 @@
-package controller;
+package com.mycompany.restaurante.controller;
 
 import com.mycompany.restaurante.modelo.pojo.Pago;
 import com.mycompany.restaurante.modelo.pojo.ServicioPago;

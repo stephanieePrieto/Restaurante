@@ -2,21 +2,20 @@ package com.mycompany.restaurante.dao;
 
 import java.sql.*;
 import com.mycompany.restaurante.modelo.pojo.Usuario;
-import com.mycompany.restaurante.modelo.sql.MySQLConnect; // Importamos tu clase de conexión
+import com.mycompany.restaurante.modelo.sql.MySQLConnect; 
 
 public class UsuarioDAO {
 
     public Usuario validarLogin(String user, String pass) {
-        // El Query busca en empleados y obtiene el nombre del Rol
-        String sql = "SELECT e.usuario, r.nombre AS rolNombre " +
+        // La consulta usa INNER JOIN para traer el nombre del rol desde la tabla 'rol'
+        // Extraemos 'usuario' para el login y 'rolNombre' para los permisos del Dashboard
+        String sql = "SELECT e.usuario, e.password, r.nombre AS nombreRol " +
                      "FROM empleados e " +
                      "INNER JOIN rol r ON e.idRol = r.idRol " +
                      "WHERE e.usuario = ? AND e.password = ?";
         
-        // 1. Instanciamos tu clase de conexión
         MySQLConnect mysql = new MySQLConnect();
         
-        // 2. Usamos el método connection() que es el que devuelve el objeto Connection
         try (Connection con = mysql.connection(); 
              PreparedStatement ps = con.prepareStatement(sql)) {
             
@@ -25,19 +24,22 @@ public class UsuarioDAO {
             
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    String nombreUsuario = rs.getString("usuario");
-                    String nombreRol = rs.getString("rolNombre");
+                    // Obtenemos los datos tal cual están en tu base de datos
+                    String username = rs.getString("usuario");
+                    String password = rs.getString("password");
+                    String rol = rs.getString("nombreRol");
                     
-                    // Retornamos el objeto Usuario con los datos de la DB
-                    return new Usuario(nombreUsuario, null, nombreRol);
+                    // Retornamos el objeto Usuario usando tu constructor:
+                    // public Usuario(String username, String password, String rol)
+                    return new Usuario(username, password, rol);
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Error técnico en UsuarioDAO: " + e.getMessage());
+            System.out.println("Error en UsuarioDAO: " + e.getMessage());
         } finally {
-            // Cerramos la conexión al terminar
+            // Cerramos la conexión para liberar recursos de la base de datos
             mysql.close();
         }
-        return null; 
+        return null; // Si las credenciales no existen o son incorrectas
     }
 }

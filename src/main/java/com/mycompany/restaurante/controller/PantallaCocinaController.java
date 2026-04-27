@@ -4,15 +4,20 @@ package com.mycompany.restaurante.controller;
 import com.mycompany.restaurante.dao.PedidoDAO; // Cambiado de OrdenDAO
 import com.mycompany.restaurante.modelo.pojo.Pedido; // Cambiado de Orden
 import com.mycompany.restaurante.modelo.sql.MySQLConnect;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 public class PantallaCocinaController {
     
@@ -76,18 +81,40 @@ public class PantallaCocinaController {
             System.err.println(e.getMessage());
         }
     }
-    
-    @FXML
-    private void volverAlMenu() {
+
+@FXML
+private void volverAlMenu() {
+    try {
+        // 1. Cargamos el FXML usando una ruta absoluta desde la raíz de resources
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
+        Parent root = loader.load();
+
+        // 2. Obtenemos la ventana actual (Stage) a través de cualquier elemento de la pantalla
+        Stage stage = (Stage) tvOrdenesPendientes.getScene().getWindow();
+
+        // 3. Creamos la nueva escena y la asignamos
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.centerOnScreen(); // Opcional: centra la ventana del login
+        stage.show();
+
+        System.out.println("Regresando al Login exitosamente.");
+
+    } catch (Exception e) {
+        System.err.println("Error al intentar regresar al login:");
+        e.printStackTrace();
+        
+        // Si falla la ruta anterior, intentamos sin el /fxml/
         try {
-            com.mycompany.restaurante.App.setRoot("/fxml/mainForm");
-        } catch (java.io.IOException e) {
-            lblMensajeError.setText("Error al cargar el menú principal");
-            lblMensajeError.setVisible(true);
-            System.err.println("Error de navegación: " + e.getMessage());
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Login.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) tvOrdenesPendientes.getScene().getWindow();
+            stage.setScene(new Scene(root));
+        } catch (Exception ex) {
+            System.err.println("Definitivamente no se encontró el archivo Login.fxml");
         }
     }
-    
+}
     private void procesarOrdenTerminada(Pedido pedido) {
         try {
             MySQLConnect db = new MySQLConnect();

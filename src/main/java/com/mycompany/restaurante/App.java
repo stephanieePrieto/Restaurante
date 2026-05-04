@@ -1,5 +1,6 @@
 package com.mycompany.restaurante;
 
+import com.mycompany.restaurante.modelo.pojo.Usuario;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,6 +11,8 @@ import java.io.IOException;
 public class App extends Application {
 
     private static Scene scene;
+    
+    public static Usuario usuarioLogueado;
 
     @Override
     public void start(Stage stage) throws IOException {

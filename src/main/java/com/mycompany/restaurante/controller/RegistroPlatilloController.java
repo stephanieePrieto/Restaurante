@@ -1,12 +1,16 @@
 package com.mycompany.restaurante.controller;
 
+import com.mycompany.restaurante.App;
 import com.mycompany.restaurante.dao.PlatilloDAO;
 import com.mycompany.restaurante.modelo.pojo.Platillo;
-import com.mycompany.restaurante.modelo.sql.MySQLConnect; // IMPORTANTE: Usar tu clase real
+import com.mycompany.restaurante.modelo.sql.MySQLConnect;
 import java.sql.Connection;
-import java.sql.SQLException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
@@ -22,7 +26,8 @@ public class RegistroPlatilloController {
 
     @FXML
     public void initialize() {
-        cmbCategoria.getItems().addAll("Plato Fuerte", "Entrada", "Postre", "Bebida");
+        // 1. Opciones sincronizadas con la pantalla del mesero
+        cmbCategoria.getItems().addAll("Pizzas", "Bebidas", "Pasteles", "Extras", "Especiales");
     }
 
     @FXML
@@ -39,44 +44,65 @@ public class RegistroPlatilloController {
 
         try {
             double precio = Double.parseDouble(precioTexto);
-            boolean esBebida = categoria.equalsIgnoreCase("Bebida");
+            boolean esBebida = categoria.equals("Bebidas");
 
-            // Crear el objeto Platillo
-            Platillo nuevo = new Platillo(0, nombre, desc, precio, categoria, "default.png", esBebida, true, 0);
+            // 2. Traductor: Convertimos el texto a su idCategoria para MySQL
+            int idCategoria = 1; // Por defecto
+            switch (categoria) {
+                case "Pizzas": idCategoria = 1; break;
+                case "Bebidas": idCategoria = 2; break;
+                case "Pasteles": idCategoria = 3; break;
+                case "Extras": idCategoria = 4; break;
+                case "Especiales": idCategoria = 5; break;
+            }
 
-            // --- CAMBIO CLAVE AQUÍ ---
-            MySQLConnect mysql = new MySQLConnect(); // Instanciamos tu clase de conexión
-            Connection conexion = mysql.connection(); // Obtenemos la conexión real
+            // Creamos el objeto pasando el idCategoria correcto al final
+            Platillo nuevo = new Platillo(0, nombre, desc, precio, categoria, "default.png", esBebida, true, idCategoria);
+
+            // Conexión real a la Base de Datos
+            MySQLConnect mysql = new MySQLConnect(); 
+            Connection conexion = mysql.connection(); 
 
             if (conexion != null) {
-                // Pasamos la conexión al DAO
                 PlatilloDAO dao = new PlatilloDAO(conexion);
                 
                 if (dao.registrarPlatillo(nuevo)) {
-                    mostrarAlerta("Éxito", "¡Platillo guardado en la base de datos!", Alert.AlertType.INFORMATION);
+                    mostrarAlerta("Éxito", "¡El platillo '" + nombre + "' fue guardado en el menú oficial!", Alert.AlertType.INFORMATION);
                     limpiarCampos();
                 } else {
-                    mostrarAlerta("Error", "No se pudo guardar el registro.", Alert.AlertType.ERROR);
+                    mostrarAlerta("Error", "No se pudo guardar el registro en MySQL.", Alert.AlertType.ERROR);
                 }
-                mysql.close(); // Siempre cerrar después de usar
+                mysql.close(); 
             } else {
-                mostrarAlerta("Error de Conexión", "No se pudo conectar a MySQL. Revisa tu contraseña.", Alert.AlertType.ERROR);
+                mostrarAlerta("Error de Conexión", "No se pudo conectar a la base de datos.", Alert.AlertType.ERROR);
             }
 
         } catch (NumberFormatException e) {
-            mostrarAlerta("Error de Formato", "El precio debe ser un número.", Alert.AlertType.ERROR);
+            mostrarAlerta("Error de Formato", "El precio debe ser un número válido (Ej. 120.50).", Alert.AlertType.ERROR);
         }
     }
 
 @FXML
     void clicCancelar(ActionEvent event) {
         try {
-            // Regresamos a la pantalla de Login usando la clase App
-            com.mycompany.restaurante.App.setRoot("Login"); 
-            
-        } catch (java.io.IOException e) {
-            e.printStackTrace();
-            mostrarAlerta("Error", "No se pudo regresar al Login.", Alert.AlertType.ERROR);
+            // 1. Cargamos el FXML del Dashboard usando tu clase App
+            // Asegúrate de que el nombre coincida exactamente con tu archivo Dashboard.fxml
+            FXMLLoader loader = App.getFXMLLoader("Dashboard"); 
+            Parent root = loader.load();
+
+            // 2. Obtenemos la ventana (Stage) actual a partir del botón que se presionó
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // 3. Cambiamos la escena al Dashboard
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Dashboard - Sistema Restaurante");
+            stage.show();
+
+        } catch (java.io.IOException ex) {
+            ex.printStackTrace();
+            System.err.println("Error al intentar regresar al Dashboard: " + ex.getMessage());
+            mostrarAlerta("Error", "No se pudo cargar la pantalla de inicio.", Alert.AlertType.ERROR);
         }
     }
 

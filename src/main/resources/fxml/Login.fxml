@@ -13,10 +13,10 @@
 
 <AnchorPane prefHeight="678.0" prefWidth="1024.0" style="-fx-background-color: linear-gradient(to bottom right, #00BFFF, #0055A4);" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.restaurante.controller.LoginController">
    <children>
-      <VBox alignment="CENTER" layoutX="125.0" layoutY="12.0" prefHeight="470.0" prefWidth="350.0" spacing="15.0" style="-fx-background-color: #FFF8E1; -fx-background-radius: 25; -fx-padding: 30; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 15, 0, 0, 8);" AnchorPane.leftAnchor="320.0" AnchorPane.topAnchor="100.0">
+      <VBox alignment="CENTER" layoutX="264.8" layoutY="44.0" prefHeight="582.0" prefWidth="458.0" spacing="15.0" style="-fx-background-color: #FFF8E1; -fx-background-radius: 25; -fx-padding: 30; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 15, 0, 0, 8);" AnchorPane.leftAnchor="265.0" AnchorPane.topAnchor="44.0">
          <children>
             
-            <ImageView fitHeight="99.0" fitWidth="252.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="257.0" fitWidth="268.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../img/pizzero.png" />
                </image>
@@ -53,9 +53,13 @@
                </children>
             </VBox>
             
-            <Button mnemonicParsing="false" onAction="#clicIngresar" prefHeight="45.0" prefWidth="250.0" style="-fx-background-color: linear-gradient(to bottom, #69F0AE, #00C853); -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-background-radius: 20; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 0, 3);" text="ENTRAR A LA COCINA">
+            <Button mnemonicParsing="false" onAction="#clicIngresar" prefHeight="45.0" prefWidth="250.0" style="-fx-background-color: linear-gradient(to bottom, #69F0AE, #00C853); -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-background-radius: 20; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 0, 3);" text="ENTRAR AL DASHBOARD">
                <VBox.margin><Insets top="10.0" /></VBox.margin>
             </Button>
+            <Button mnemonicParsing="false" onAction="#clicAsistencia" prefHeight="45.0" prefWidth="250.0" style="-fx-background-color: linear-gradient(to bottom, #69F0AE, #00C853); -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-background-radius: 20; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 0, 3);" text="ASISTENCIA">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin></Button>
             
          </children>
       </VBox>

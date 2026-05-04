@@ -348,4 +348,84 @@ settingsRadioButton:selected .radio > .dot {
     
     /* Opcional: Un pequeño brillo verde para que resalte más */
     -fx-effect: dropshadow(three-pass-box, rgba(76, 175, 80, 0.5), 10, 0, 0, 0);
+}  
+    #columnaEstado {
+    -fx-background-color: #b3e5fc; /* Azul hielo claro */
+    } 
+    .boton-categoria {
+    -fx-background-color: white;
+    -fx-border-color: #0099CC;
+    -fx-border-width: 3;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-text-fill: #003366;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 2, 0, 0, 4);
+}
+.boton-especiales {
+    -fx-background-color: #FFD700; /* Amarillo */
+    -fx-border-color: #B8860B;
+    -fx-border-width: 3;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-text-fill: #003366;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 2, 0, 0, 4);
+}
+.boton-mas{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+}
+
+.contenedores-menu{
+-fx-background-color: white;
+-fx-background-radius: 10;
+-fx-border-color: #A0D8EF;
+-fx-border-width: 2;
+-fx-border-radius: 10;
+
+}
+
+.texto-pizza {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold; /* ¡Esto hace la magia! */
+    -fx-text-fill: #333333; /* Un gris muy oscuro para que resalte */
+}
+
+/* 1. Estado normal del botón */
+.boton-enviar-chef {
+    -fx-background-color: #65C100; /* Un verde brillante y llamativo */
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 15; /* Bordes bien redondeados */
+    -fx-border-color: #386600; /* Borde verde muy oscuro para el estilo cómic */
+    -fx-border-width: 3;
+    -fx-border-radius: 15;
+    -fx-cursor: hand;
+    /* La sombra dura hacia abajo que le da el aspecto 3D */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 2, 0, 0, 5); 
+    -fx-translate-y: 0;
+    -fx-transition: -fx-background-color 0.2s, -fx-scale-x 0.2s, -fx-scale-y 0.2s;
+    -fx-alignment: center;
+}
+
+/* 2. Estado Hover: Cuando el mesero pasa el mouse por encima */
+.boton-enviar-chef:hover {
+    -fx-background-color: #78E000; /* Se ilumina un poco para indicar que es interactivo */
+    -fx-scale-x: 1.02; /* Crece ligerísimamente */
+    -fx-scale-y: 1.02;
+}
+
+/* 3. Estado Pressed: Cuando el mesero hace clic */
+.boton-enviar-chef:pressed {
+    -fx-background-color: #539E00; /* Se oscurece un poco simulando presión */
+    -fx-translate-y: 5; /* ...y el botón baja 5 píxeles, ¡como si se hundiera de verdad! */
+}
 }

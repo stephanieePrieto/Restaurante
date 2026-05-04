@@ -9,14 +9,16 @@ import javafx.collections.ObservableList;
 public class AsistenciaDAO {
 
     /**
-     * Obtiene los registros de hoy.
+     * Obtiene el historial completo de registros.
      */
     public ObservableList<Asistencia> obtenerAsistenciasHoy() {
         ObservableList<Asistencia> lista = FXCollections.observableArrayList();
         MySQLConnect mysql = new MySQLConnect();
+        
+        // CORRECCIÓN 1: Quitamos el CURDATE() para que puedas ver todos tus registros de prueba, no solo los de hoy.
         String sql = "SELECT a.idAsistencia, e.usuario, a.fechaEntrada, a.fechaSalida, a.estado, a.horas_trabajadas " +
                      "FROM asistencias a INNER JOIN empleados e ON a.idEmpleado = e.idEmpleado " +
-                     "WHERE DATE(a.fechaEntrada) = CURDATE() ORDER BY a.fechaEntrada DESC";
+                     "ORDER BY a.fechaEntrada DESC";
                      
         try (Connection con = mysql.connection()) {
             if (con == null) throw new SQLException("No se pudo conectar a la base de datos.");
@@ -64,8 +66,11 @@ public class AsistenciaDAO {
         try (Connection con = mysql.connection()) {
             if (con == null) throw new SQLException("Conexión perdida con el servidor.");
 
-            // 2. VALIDACIÓN DE ROL: ¿Es juan1 realmente un Mesero?
-            String sqlValidarRol = "SELECT idEmpleado FROM empleados WHERE usuario = ? AND rol = ?";
+            // CORRECCIÓN 2: El INNER JOIN correcto para validar el rol usando la nueva estructura de la base de datos
+            String sqlValidarRol = "SELECT e.idEmpleado FROM empleados e " +
+                                   "INNER JOIN rol r ON e.idRol = r.idRol " +
+                                   "WHERE e.usuario = ? AND r.nombre = ?";
+                                   
             try (PreparedStatement psVal = con.prepareStatement(sqlValidarRol)) {
                 psVal.setString(1, username);
                 psVal.setString(2, rolSeleccionado);

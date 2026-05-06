@@ -10,9 +10,9 @@ public class MySQLConnect {
     private Connection conn;
     private String host = "localhost";
     private String port = "3306";
-    private String db = "restaurante";
+    private String db = "Restaurante";
     private String username = "root";
-    private String password = "Rocky1717";
+    private String password = "rayito28";
     private static MySQLConnect connect;
     public MySQLConnect() {
         String driver = "com.mysql.cj.jdbc.Driver";

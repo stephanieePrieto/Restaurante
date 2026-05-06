@@ -3,34 +3,35 @@ package com.mycompany.restaurante.modelo.pojo;
 import com.mycompany.restaurante.dao.CuentaDAO;
 import com.mycompany.restaurante.dao.MesaDAO;
 import com.mycompany.restaurante.dao.PagoDAO;
+import com.mycompany.restaurante.dao.TicketDAO;
 
 public class ServicioPago {
 
-    private CuentaDAO cuentaDAO = new CuentaDAO();
-    private PagoDAO pagoDAO = new PagoDAO();
-    private MesaDAO mesaDAO = new MesaDAO();
+    CuentaDAO cuentaDAO = new CuentaDAO();
+    PagoDAO pagoDAO = new PagoDAO();
+    MesaDAO mesaDAO = new MesaDAO();
+    TicketDAO ticketDAO = new TicketDAO();
 
-    public boolean registrarPago(int idMesa, double monto, String metodo) {
+    public boolean registrarPago(Pago pago) {
 
-        double total = cuentaDAO.obtenerTotalPorMesa(idMesa);
-        int idPedido = cuentaDAO.obtenerPedidoPorMesa(idMesa);
+        double total = cuentaDAO.obtenerTotalPorMesa(pago.getIdMesa());
+        int idPedido = cuentaDAO.obtenerPedidoPorMesa(pago.getIdMesa());
 
-        if (monto < total) {
+        if (pago.getMonto() < total) {
             return false;
         }
 
-        Pago pago = new Pago();
-        pago.setMonto(total);
-        pago.setMetodo(metodo);
+        pago.setTotal(total);
         pago.setIdPedido(idPedido);
-
-        boolean guardado = pagoDAO.insertarPago(pago);
+        
+        int idPago = pagoDAO.insertarPago(pago);
+        boolean guardado = idPago > 0;
 
         if (guardado) {
-            mesaDAO.liberarMesa(idMesa);
-            return true;
+            ticketDAO.generarTicket(idPedido); // 
+            mesaDAO.liberarMesa(pago.getIdMesa());
         }
 
-        return false;
+        return guardado;
     }
 }

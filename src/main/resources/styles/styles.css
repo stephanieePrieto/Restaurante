@@ -428,4 +428,4 @@ settingsRadioButton:selected .radio > .dot {
     -fx-background-color: #539E00; /* Se oscurece un poco simulando presión */
     -fx-translate-y: 5; /* ...y el botón baja 5 píxeles, ¡como si se hundiera de verdad! */
 }
-}
+

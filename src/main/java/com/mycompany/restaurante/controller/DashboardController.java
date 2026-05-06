@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,10 +20,10 @@ public class DashboardController {
     @FXML private Label lblSeccionGerente, lblSeccionRecepcionista, lblSeccionCajero, lblSeccionMesero;
     @FXML private Button btnAltaMenu, btnEmpleados, btnReservaciones, btnCobro, btnPedido, btnAsignar, btnGenerar, btnEstado, btnLista, btnFacturacion;
     @FXML private MenuButton mbControl, mbGestionOrdenes;
+    @FXML private MenuItem miReporteVentas, miReporteAlmacen;
 
     @FXML
     public void initialize() {
-        // Cada vez que se carga el Dashboard, revisamos quién está logueado
         if (App.usuarioLogueado != null) {
             configurarPermisos(App.usuarioLogueado.getRol());
         }
@@ -67,11 +68,12 @@ public class DashboardController {
     @FXML
     private void cerrarSesion(ActionEvent event) {
         try {
-            App.usuarioLogueado = null; // Borrar sesión
+            App.usuarioLogueado = null; 
             cambiarPantalla(event, "Login", "Acceso al Sistema");
         } catch (IOException ex) { ex.printStackTrace(); }
     }
 
+    // --- MÉTODOS DEL EQUIPO ---
     @FXML private void abrirPantallaPedido(ActionEvent event) {
         try { cambiarPantalla(event, "PantallaPedido", "Tomar Pedido"); } catch (IOException ex) { ex.printStackTrace(); }
     }
@@ -80,10 +82,26 @@ public class DashboardController {
         try { cambiarPantalla(event, "RegistroPlatillo", "Gestión de Menú"); } catch (IOException ex) { ex.printStackTrace(); }
     }
 
+    // --- MÉTODOS RECUPERADOS (NUESTROS) ---
+    @FXML private void abrirRegistroEmpleado(ActionEvent event) {
+        try { cambiarPantalla(event, "RegistroEmpleado", "Gestión de Empleados"); } catch (IOException ex) { ex.printStackTrace(); }
+    }
+
+    @FXML private void abrirReporteVentas(ActionEvent event) {
+        try { cambiarPantalla(event, "ReporteVentas", "Reporte de Ventas"); } catch (IOException ex) { ex.printStackTrace(); }
+    }
+
+    @FXML private void abrirAlmacen(ActionEvent event) {
+        try { cambiarPantalla(event, "Almacen", "Control de Almacén"); } catch (IOException ex) { ex.printStackTrace(); }
+    }
+
+    // --- MÉTODO CAMBIAR PANTALLA (Corregido para soportar MenuItem) ---
     private void cambiarPantalla(ActionEvent event, String fxml, String titulo) throws IOException {
         FXMLLoader loader = App.getFXMLLoader(fxml);
         Parent root = loader.load();
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        
+        // Usamos btnEmpleados como referencia segura en lugar de event.getSource() para evitar el ClassCastException
+        Stage stage = (Stage) btnEmpleados.getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.setTitle(titulo);
         stage.show();

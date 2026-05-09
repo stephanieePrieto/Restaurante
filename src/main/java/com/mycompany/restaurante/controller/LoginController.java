@@ -34,28 +34,11 @@ public class LoginController {
         Usuario usuarioValidado = dao.validarLogin(user, pass);
 
         if (usuarioValidado != null) {
-            // ESTA ES LA LÍNEA QUE FALTABA:
+            // ASIGNAMOS EL USUARIO A LA APP PARA QUE TODO EL SISTEMA SEPA QUIÉN ES
             App.usuarioLogueado = usuarioValidado; 
-            
             entrarAlDashboard(usuarioValidado);
         } else {
             mostrarAlerta("Acceso Denegado", "Usuario o contraseña incorrectos.");
-        }
-    }
-    
-    @FXML
-    private void clicAsistencia(ActionEvent event) {
-        try {
-            FXMLLoader loader = App.getFXMLLoader("RegistarAsistenciaEmpleados"); 
-            Parent root = loader.load();
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setTitle("Registro de Asistencia - Pizzatron 3000");
-            stage.show();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            mostrarAlerta("Error de Navegación", "No se pudo cargar la pantalla de asistencia.");
         }
     }
 
@@ -93,7 +76,5 @@ public class LoginController {
         alert.setHeaderText(null);
         alert.setContentText(mensaje);
         alert.showAndWait();
-        
     }
-
 }

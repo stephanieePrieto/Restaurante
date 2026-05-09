@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="678.0" prefWidth="1024.0" style="-fx-background-color: #c9f3fd; -fx-border-color: #003366; -fx-border-width: 8; -fx-border-radius: 15; -fx-background-radius: 15;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.restaurante.controller.PantallaPedidoController">
+<AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #c9f3fd; -fx-border-color: #003366; -fx-border-width: 8; -fx-border-radius: 15; -fx-background-radius: 15;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.restaurante.controller.PantallaPedidoController">
    <children>
       <ImageView fitHeight="34.0" fitWidth="516.0" layoutX="7.0" layoutY="124.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -49,7 +49,7 @@
             <Image url="@../img/tituloTomarPedido.png" />
          </image>
       </ImageView>
-      <VBox alignment="CENTER" layoutX="-34.0" layoutY="181.0" prefHeight="387.0" prefWidth="279.0" spacing="15.0">
+      <VBox alignment="CENTER" layoutX="-34.0" layoutY="181.0" prefHeight="387.0" prefWidth="279.0" spacing="20.0">
          <padding>
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
          </padding>
@@ -104,7 +104,7 @@
       <StackPane layoutX="206.0" layoutY="189.0">
          <children>
             <AnchorPane prefHeight="414.0" prefWidth="447.0" />
-            <GridPane fx:id="gridPizza" hgap="10.0" prefHeight="384.0" prefWidth="462.0" style="-fx-background-color: transparent; -fx-background-radius: 10; -fx-border-color: #A0D8EF; -fx-border-width: 0; -fx-border-radius: 10;" vgap="50.0">
+            <GridPane fx:id="gridPizza" hgap="10.0" prefHeight="384.0" prefWidth="462.0" style="-fx-background-color: transparent; -fx-background-radius: 10; -fx-border-color: #A0D8EF; -fx-border-width: 0; -fx-border-radius: 10;" vgap="50.0" visible="false">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -133,7 +133,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$120.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -170,7 +170,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$140.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -206,7 +206,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$145.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -242,7 +242,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$150.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -278,7 +278,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$160.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -314,7 +314,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$170.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -350,7 +350,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$155.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -386,7 +386,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$165.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -422,7 +422,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$150.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -484,7 +484,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$60.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -520,7 +520,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$40.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -556,7 +556,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$55.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -592,7 +592,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$30.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -628,7 +628,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$60.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -664,7 +664,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$45.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -700,7 +700,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$50.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -736,7 +736,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$40.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -772,7 +772,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$35.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -830,7 +830,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$55.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -866,7 +866,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$50.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -902,7 +902,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$45.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -938,7 +938,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$40.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -974,7 +974,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$50.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -1010,7 +1010,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$60.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -1046,7 +1046,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$65.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -1082,7 +1082,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$30.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -1118,7 +1118,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$30.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -1176,7 +1176,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$40.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -1212,7 +1212,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$60.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -1248,7 +1248,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$70.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -1284,7 +1284,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$60.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -1320,7 +1320,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$55.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -1356,7 +1356,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$45.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -1392,7 +1392,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$90.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -1428,7 +1428,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$75.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -1464,7 +1464,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$50.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -1488,7 +1488,7 @@
                   </VBox>
                </children>
             </GridPane>
-            <GridPane fx:id="gridEspeciales" hgap="10.0" prefHeight="384.0" prefWidth="462.0" style="-fx-background-color: transparent; -fx-background-radius: 10; -fx-border-color: #A0D8EF; -fx-border-width: 0; -fx-border-radius: 10;" vgap="50.0" visible="false">
+            <GridPane fx:id="gridEspeciales" hgap="10.0" prefHeight="384.0" prefWidth="462.0" style="-fx-background-color: transparent; -fx-background-radius: 10; -fx-border-color: #A0D8EF; -fx-border-width: 0; -fx-border-radius: 10;" vgap="50.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -1522,7 +1522,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$110.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -1558,7 +1558,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$140.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -1594,7 +1594,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$150.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -1630,7 +1630,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$160.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -1666,7 +1666,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$180.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -1702,7 +1702,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="190.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -1738,7 +1738,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$170.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -1774,7 +1774,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$160.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -1810,7 +1810,7 @@
                         </ImageView>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="130.0">
                            <children>
-                              <Label graphicTextGap="10.0" text="Label">
+                              <Label graphicTextGap="10.0" text="\$160.00">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -1836,7 +1836,7 @@
             </GridPane>
          </children>
       </StackPane>
-      <Button fx:id="btnVolver" layoutX="55.0" layoutY="607.0" mnemonicParsing="false" onAction="#volverDashboard" styleClass="boton-especiales" stylesheets="@../styles/styles.css" text="Atrás">
+      <Button fx:id="btnVolver" layoutX="50.0" layoutY="658.0" mnemonicParsing="false" onAction="#volverDashboard" styleClass="boton-especiales" stylesheets="@../styles/styles.css" text="Volver">
          <graphic>
             <ImageView fitHeight="38.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -1845,7 +1845,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="btnBorrarPedido" layoutX="245.0" layoutY="603.0" mnemonicParsing="false" onAction="#clicBorrarPedido" prefHeight="56.0" prefWidth="171.0" styleClass="boton-especiales" stylesheets="@../styles/styles.css" text="Borrar Pedido">
+      <Button fx:id="btnBorrarPedido" layoutX="245.0" layoutY="651.0" mnemonicParsing="false" onAction="#clicBorrarPedido" prefHeight="56.0" prefWidth="171.0" styleClass="boton-especiales" stylesheets="@../styles/styles.css" text="Borrar Pedido">
          <graphic>
             <ImageView fitHeight="40.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -1870,7 +1870,7 @@
          </columnResizePolicy>
       </TableView>
       <Label layoutX="848.0" layoutY="596.0" prefHeight="34.0" prefWidth="60.0" style="-fx-font-size: 20;" styleClass="texto-pizza" stylesheets="@../styles/styles.css" text="Total:" />
-      <Button fx:id="btnEnviarChef" layoutX="465.0" layoutY="603.0" mnemonicParsing="false" onAction="#clicEnviarChef" prefHeight="56.0" prefWidth="171.0" styleClass="boton-enviar-chef" stylesheets="@../styles/styles.css" text="Enviar Chef">
+      <Button fx:id="btnEnviarChef" layoutX="465.0" layoutY="651.0" mnemonicParsing="false" onAction="#clicEnviarChef" prefHeight="56.0" prefWidth="171.0" styleClass="boton-enviar-chef" stylesheets="@../styles/styles.css" text="Enviar Chef">
          <graphic>
             <ImageView fitHeight="40.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
                <image>

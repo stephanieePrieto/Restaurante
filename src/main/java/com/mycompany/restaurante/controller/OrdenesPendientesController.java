@@ -19,7 +19,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-public class PantallaCocinaController {
+public class OrdenesPendientesController {
     
     @FXML private TableView<Pedido> tvOrdenesPendientes;
     @FXML private TableColumn<Pedido, Integer> tcIdOrden;

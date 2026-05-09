@@ -12,14 +12,18 @@ public class App extends Application {
 
     private static Scene scene;
     
-    public static Usuario usuarioLogueado;
+    // Este objeto es el que mantiene la sesión de tus pingüinos
+    public static Usuario usuarioLogueado; 
 
     @Override
     public void start(Stage stage) throws IOException {
+        // Al iniciar, no hay nadie logueado
+        usuarioLogueado = null; 
+        
         Parent root = loadFXML("Login"); 
         scene = new Scene(root, 1024, 768);
         
-        stage.setTitle("Sistema Restaurante CP - Acceso");
+        stage.setTitle("Sistema Restaurante - Acceso");
         stage.setScene(scene);
         stage.setResizable(false); 
         stage.show();
@@ -29,7 +33,6 @@ public class App extends Application {
         scene.setRoot(loadFXML(fxml));
     }
 
-    // --- NUEVO MÉTODO PARA COMUNICACIÓN ENTRE CONTROLADORES ---
     public static FXMLLoader getFXMLLoader(String fxml) throws IOException {
         String path = "/fxml/" + fxml + ".fxml";
         var resource = App.class.getResource(path);

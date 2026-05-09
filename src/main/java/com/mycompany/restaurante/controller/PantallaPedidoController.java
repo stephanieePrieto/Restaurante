@@ -29,22 +29,14 @@ import javafx.stage.Stage;
 
 public class PantallaPedidoController implements Initializable {
 
-    @FXML private Button btnBebidas, btnEspeciales, btnExtras, btnPasteles, btnPizzas, btnVolver;
     @FXML private GridPane gridBebidas, gridEspeciales, gridExtras, gridPasteles, gridPizza;
-
-    // --- ELEMENTOS DEL TICKET ---
     @FXML private ComboBox<String> cmbMesas;
-    @FXML private Label lblTotalText;
-    @FXML private Label lblPedido; // <--- AQUÍ ESTÁ TU NUEVO LABEL PARA EL FOLIO
-    
+    @FXML private Label lblTotalText, lblPedido;
     @FXML private TableView<Platillo> tablaPedido;
     @FXML private TableColumn<Platillo, String> colArticulo;
     @FXML private TableColumn<Platillo, Integer> colCant;
     @FXML private TableColumn<Platillo, Double> colTotal;
-    
-    @FXML private Button btnBorrarPedido, btnEliminar, btnEnviarChef;
 
-    // --- VARIABLES ---
     private ObservableList<Platillo> listaPedido = FXCollections.observableArrayList();
     private double totalMonto = 0.0;
     private int pedidoActivoActual = -1; 
@@ -53,11 +45,8 @@ public class PantallaPedidoController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();
         cargarMesasOcupadas();
-        mostrarGrid("Pizzas"); 
-        
-        // Al entrar, el pedido está en blanco
+        mostrarGrid("Pizzas");
         if (lblPedido != null) lblPedido.setText("0000");
-        
         cmbMesas.setOnAction(event -> cargarPedidoMesaSeleccionada());
     }
 
@@ -68,159 +57,63 @@ public class PantallaPedidoController implements Initializable {
         tablaPedido.setItems(listaPedido);
     }
 
-    // =======================================================================
-    // CONEXIONES A BASE DE DATOS
-    // =======================================================================
-
     private void cargarMesasOcupadas() {
         MySQLConnect mysql = new MySQLConnect();
         try (Connection con = mysql.connection()) {
-            if (con == null) return; // Si no hay BD conectada, no hace nada
-            
-            try (PreparedStatement ps = con.prepareStatement("SELECT idMesa FROM mesa WHERE estado = 'Ocupada'");
-                 ResultSet rs = ps.executeQuery()) {
-                
+            if (con == null) return;
+            try (PreparedStatement ps = con.prepareStatement("SELECT idMesa FROM mesa WHERE estado = 'Ocupada'")) {
+                ResultSet rs = ps.executeQuery();
                 cmbMesas.getItems().clear();
                 while (rs.next()) {
-                    // Ahora SOLO insertamos el número, como pediste
                     cmbMesas.getItems().add(String.valueOf(rs.getInt("idMesa")));
                 }
             }
-        } catch (SQLException e) {
-            System.err.println("Error BD al cargar mesas: " + e.getMessage());
-        }
+        } catch (SQLException e) { e.printStackTrace(); }
     }
 
     private void cargarPedidoMesaSeleccionada() {
         if (cmbMesas.getValue() == null) return;
-        
-        // Como ahora solo es un número, lo parseamos directo
-        int idMesa = Integer.parseInt(cmbMesas.getValue());
-        MySQLConnect mysql = new MySQLConnect();
-        
-        try (Connection con = mysql.connection()) {
-            if (con == null) return;
-            
-            PedidoDAO pedidoDAO = new PedidoDAO(con);
-            PlatilloDAO platilloDAO = new PlatilloDAO(con);
-            
-            pedidoActivoActual = pedidoDAO.obtenerPedidoActivoPorMesa(idMesa);
-            listaPedido.clear();
-            
-            if (pedidoActivoActual != -1) {
-                // Si ya existe el pedido, actualizamos tu Label con el Folio real (con ceros a la izquierda)
-                if (lblPedido != null) lblPedido.setText(String.format("%04d", pedidoActivoActual));
-                
-                List<Platillo> platillosBD = platilloDAO.obtenerPlatillosPorOrden(pedidoActivoActual);
-                for (Platillo p : platillosBD) {
-                    p.setPrecio(p.getPrecio() * p.getCantidad());
+        try {
+            int idMesa = Integer.parseInt(cmbMesas.getValue());
+            MySQLConnect mysql = new MySQLConnect();
+            Connection con = mysql.connection();
+            if (con != null) {
+                PedidoDAO pedidoDAO = new PedidoDAO(con);
+                PlatilloDAO platilloDAO = new PlatilloDAO(con);
+                pedidoActivoActual = pedidoDAO.obtenerPedidoActivoPorMesa(idMesa);
+                listaPedido.clear();
+                if (pedidoActivoActual != -1) {
+                    if (lblPedido != null) lblPedido.setText(String.format("%04d", pedidoActivoActual));
+                    List<Platillo> platillosBD = platilloDAO.obtenerPlatillosPorOrden(pedidoActivoActual);
+                    for (Platillo p : platillosBD) { p.setPrecio(p.getPrecio() * p.getCantidad()); }
+                    listaPedido.setAll(platillosBD);
+                } else {
+                    if (lblPedido != null) lblPedido.setText("Nuevo");
                 }
-                listaPedido.setAll(platillosBD);
-            } else {
-                // Si la mesa no tiene pedido aún, mostramos "Nuevo"
-                if (lblPedido != null) lblPedido.setText("Nuevo");
+                calcularTotal();
             }
-            calcularTotal();
-            
-        } catch (SQLException e) {
-            mostrarAlerta("Error", "No se pudo cargar el pedido de la mesa.");
-        }
+        } catch (SQLException e) { e.printStackTrace(); }
     }
 
     @FXML
     void clicEnviarChef(ActionEvent event) {
-        if (listaPedido.isEmpty()) {
-            mostrarAlerta("Error", "El ticket está vacío. Agrega platillos a la comanda primero.");
+        if (listaPedido.isEmpty() || cmbMesas.getValue() == null) {
+            mostrarAlerta("Error", "Verifica la mesa y los platillos.");
             return;
         }
-        if (cmbMesas.getValue() == null) {
-            mostrarAlerta("Error", "Selecciona el número de mesa del cliente.");
-            return;
-        }
-
         int idMesa = Integer.parseInt(cmbMesas.getValue());
-        MySQLConnect mysql = new MySQLConnect();
+        int idEmpleado = App.usuarioLogueado.getId(); 
 
+        MySQLConnect mysql = new MySQLConnect();
         try (Connection con = mysql.connection()) {
             PedidoDAO pedidoDAO = new PedidoDAO(con);
-            
             if (pedidoActivoActual == -1) {
-                pedidoActivoActual = pedidoDAO.crearNuevoPedido(idMesa);
+                pedidoActivoActual = pedidoDAO.crearNuevoPedido(idMesa, idEmpleado);
             }
-            
             pedidoDAO.guardarDetallesPedido(pedidoActivoActual, listaPedido);
-            
-            // --- AQUÍ ESTÁ TU NUEVO MENSAJE PROFESIONAL ---
-            mostrarAlertaExito("Comanda Registrada", "La orden #" + String.format("%04d", pedidoActivoActual) + " de la mesa " + idMesa + " ya está en preparación en cocina.");
-            
-            // Limpiamos todo para el siguiente cliente
-            listaPedido.clear();
-            calcularTotal();
-            cmbMesas.getSelectionModel().clearSelection();
-            pedidoActivoActual = -1; 
-            if (lblPedido != null) lblPedido.setText("0000");
-
-        } catch (SQLException e) {
-                    // Esto hará que la alerta te diga EXACTAMENTE qué platillo o qué columna falla
-                    mostrarAlerta("Error de Base de Datos", "Detalle: " + e.getMessage());
-                    e.printStackTrace(); 
-                }
-    }
-
-    // =======================================================================
-    // LÓGICA DE INTERFAZ Y TICKET
-    // =======================================================================
-
-    private void agregarAlTicket(String nombreItem, double precioBase) {
-        if (cmbMesas.getValue() == null) {
-            mostrarAlerta("Mesa no seleccionada", "Por favor selecciona el número de mesa antes de armar la comanda.");
-            return; 
-        }
-
-        boolean encontrado = false;
-        for (Platillo p : listaPedido) {
-            if (p.getNombre().equals(nombreItem)) {
-                p.setCantidad(p.getCantidad() + 1);
-                p.setPrecio(precioBase * p.getCantidad()); 
-                encontrado = true;
-                break;
-            }
-        }
-        if (!encontrado) {
-            Platillo nuevo = new Platillo();
-            nuevo.setNombre(nombreItem);
-            nuevo.setCantidad(1);
-            nuevo.setPrecio(precioBase); 
-            listaPedido.add(nuevo);
-        }
-        tablaPedido.refresh();
-        calcularTotal();
-    }
-
-    private void calcularTotal() {
-        totalMonto = 0.0;
-        for (Platillo p : listaPedido) {
-            totalMonto += p.getPrecio(); 
-        }
-        lblTotalText.setText("$ " + String.format("%.2f", totalMonto));
-    }
-
-    @FXML
-    void clicEliminarRenglon(ActionEvent event) {
-        Platillo seleccionado = tablaPedido.getSelectionModel().getSelectedItem();
-        if (seleccionado != null) {
-            if (seleccionado.getCantidad() > 1) {
-                double precioBase = seleccionado.getPrecio() / seleccionado.getCantidad();
-                seleccionado.setCantidad(seleccionado.getCantidad() - 1);
-                seleccionado.setPrecio(precioBase * seleccionado.getCantidad());
-                tablaPedido.refresh();
-            } else {
-                listaPedido.remove(seleccionado);
-            }
-            calcularTotal();
-        } else {
-            mostrarAlerta("Aviso", "Selecciona un renglón del ticket para eliminar.");
-        }
+            mostrarAlertaExito("¡Comanda Enviada!", "La orden #" + pedidoActivoActual + " está en cocina.");
+            limpiarPantalla();
+        } catch (SQLException e) { mostrarAlerta("Error", e.getMessage()); }
     }
 
     @FXML
@@ -229,17 +122,63 @@ public class PantallaPedidoController implements Initializable {
         calcularTotal();
     }
 
-    private void mostrarGrid(String categoria) {
-        gridPizza.setVisible(false); gridBebidas.setVisible(false);
-        gridPasteles.setVisible(false); gridExtras.setVisible(false); gridEspeciales.setVisible(false);
-
-        switch (categoria) {
-            case "Pizzas": gridPizza.setVisible(true); break;
-            case "Bebidas": gridBebidas.setVisible(true); break;
-            case "Pasteles": gridPasteles.setVisible(true); break;
-            case "Extras": gridExtras.setVisible(true); break;
-            case "Especiales": gridEspeciales.setVisible(true); break;
+    @FXML
+    void clicEliminarRenglon(ActionEvent event) {
+        Platillo seleccionado = tablaPedido.getSelectionModel().getSelectedItem();
+        if (seleccionado != null) {
+            if (seleccionado.getCantidad() > 1) {
+                double precioUnitario = seleccionado.getPrecio() / seleccionado.getCantidad();
+                seleccionado.setCantidad(seleccionado.getCantidad() - 1);
+                seleccionado.setPrecio(precioUnitario * seleccionado.getCantidad());
+                tablaPedido.refresh();
+            } else {
+                listaPedido.remove(seleccionado);
+            }
+            calcularTotal();
+        } else {
+            mostrarAlerta("Aviso", "Selecciona un platillo de la tabla.");
         }
+    }
+
+    private void agregarAlTicket(String nombreItem, double precioBase) {
+        if (cmbMesas.getValue() == null) {
+            mostrarAlerta("Aviso", "Selecciona una mesa primero.");
+            return;
+        }
+        boolean encontrado = false;
+        for (Platillo p : listaPedido) {
+            if (p.getNombre().equals(nombreItem)) {
+                p.setCantidad(p.getCantidad() + 1);
+                p.setPrecio(precioBase * p.getCantidad());
+                encontrado = true; break;
+            }
+        }
+        if (!encontrado) {
+            Platillo n = new Platillo(); n.setNombre(nombreItem); n.setCantidad(1); n.setPrecio(precioBase);
+            listaPedido.add(n);
+        }
+        tablaPedido.refresh(); calcularTotal();
+    }
+
+    private void calcularTotal() {
+        totalMonto = 0;
+        for (Platillo p : listaPedido) { totalMonto += p.getPrecio(); }
+        lblTotalText.setText("$ " + String.format("%.2f", totalMonto));
+    }
+
+    private void limpiarPantalla() {
+        listaPedido.clear(); calcularTotal();
+        cmbMesas.getSelectionModel().clearSelection();
+        pedidoActivoActual = -1;
+        if (lblPedido != null) lblPedido.setText("0000");
+    }
+
+    private void mostrarGrid(String cat) {
+        gridPizza.setVisible(cat.equals("Pizzas"));
+        gridBebidas.setVisible(cat.equals("Bebidas"));
+        gridPasteles.setVisible(cat.equals("Pasteles"));
+        gridExtras.setVisible(cat.equals("Extras"));
+        gridEspeciales.setVisible(cat.equals("Especiales"));
     }
 
     @FXML void clicVerPizzas(ActionEvent event) { mostrarGrid("Pizzas"); }
@@ -248,7 +187,6 @@ public class PantallaPedidoController implements Initializable {
     @FXML void clicVerExtras(ActionEvent event) { mostrarGrid("Extras"); }
     @FXML void clicVerEspeciales(ActionEvent event) { mostrarGrid("Especiales"); }
 
-    // --- TODOS LOS BOTONES DE PLATILLOS (+) ---
     @FXML void clicAddPizzaQueso(ActionEvent event) { agregarAlTicket("Pizza Queso", 120.0); }
     @FXML void clicAddPizzaPepperoni(ActionEvent event) { agregarAlTicket("Pizza Pepperoni", 140.0); }
     @FXML void clicAddPizzaVegetariana(ActionEvent event) { agregarAlTicket("Pizza Vegetariana", 150.0); }
@@ -278,7 +216,6 @@ public class PantallaPedidoController implements Initializable {
     @FXML void clicAddSundae(ActionEvent event) { agregarAlTicket("Sundae", 55.0); }
     @FXML void clicAddAlitasBBQ(ActionEvent event) { agregarAlTicket("Alitas BBQ", 90.0); }
     @FXML void clicAddArosCebolla(ActionEvent event) { agregarAlTicket("Aros de Cebolla", 60.0); }
-    @FXML void clicAddCalzone(ActionEvent event) { agregarAlTicket("Calzone Clásico", 110.0); }
     @FXML void clicAddEnsalada(ActionEvent event) { agregarAlTicket("Ensalada Fresca", 70.0); }
     @FXML void clicAddEnsaladaRepollo(ActionEvent event) { agregarAlTicket("Ensalada de Repollo", 40.0); }
     @FXML void clicAddNuggetsPollo(ActionEvent event) { agregarAlTicket("Nuggets de Pollo", 75.0); }
@@ -286,6 +223,7 @@ public class PantallaPedidoController implements Initializable {
     @FXML void clicAddPanAjoQueso(ActionEvent event) { agregarAlTicket("Pan de Ajo con Queso", 55.0); }
     @FXML void clicAddPapasFritas(ActionEvent event) { agregarAlTicket("Papas Fritas", 50.0); }
     @FXML void clicAddSopaDia(ActionEvent event) { agregarAlTicket("Sopa del Día", 60.0); }
+    @FXML void clicAddCalzone(ActionEvent event) { agregarAlTicket("Calzone Clásico", 110.0); }
     @FXML void clicAddPizzaCamarones(ActionEvent event) { agregarAlTicket("Pizza de Camarones", 180.0); }
     @FXML void clicAddPizzaCorazon(ActionEvent event) { agregarAlTicket("Pizza Corazón", 160.0); }
     @FXML void clicAddPizzaEstrella(ActionEvent event) { agregarAlTicket("Pizza Estrella", 160.0); }
@@ -298,25 +236,17 @@ public class PantallaPedidoController implements Initializable {
     @FXML
     void volverDashboard(ActionEvent event) {
         try {
-            FXMLLoader loader = App.getFXMLLoader("Dashboard"); 
-            Parent root = loader.load();
+            Parent root = App.getFXMLLoader("Dashboard").load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        } catch (IOException ex) { ex.printStackTrace(); }
     }
 
-    private void mostrarAlerta(String titulo, String mensaje) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle(titulo); alert.setHeaderText(null); alert.setContentText(mensaje);
-        alert.showAndWait();
+    private void mostrarAlerta(String t, String m) {
+        Alert a = new Alert(Alert.AlertType.WARNING); a.setTitle(t); a.setHeaderText(null); a.setContentText(m); a.showAndWait();
     }
 
-    private void mostrarAlertaExito(String titulo, String mensaje) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(titulo); alert.setHeaderText(null); alert.setContentText(mensaje);
-        alert.showAndWait();
+    private void mostrarAlertaExito(String t, String m) {
+        Alert a = new Alert(Alert.AlertType.INFORMATION); a.setTitle(t); a.setContentText(m); a.showAndWait();
     }
 }

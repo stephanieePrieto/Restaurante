@@ -429,3 +429,17 @@ settingsRadioButton:selected .radio > .dot {
     -fx-translate-y: 5; /* ...y el botón baja 5 píxeles, ¡como si se hundiera de verdad! */
 }
 
+.table-view .column-header {
+    -fx-background-color: #005EA8;
+    -fx-border-color: #003B6F;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.table-row-cell {
+    -fx-cell-size: 55px;
+}

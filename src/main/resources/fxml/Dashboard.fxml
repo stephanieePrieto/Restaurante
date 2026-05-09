@@ -10,34 +10,36 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #3db1ff;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.restaurante.controller.DashboardController">
+<AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #A0D3F2;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.restaurante.controller.DashboardController">
    <children>
       <VBox layoutX="168.0" layoutY="85.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #3db1ff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox prefHeight="80.0" prefWidth="1024.0" style="-fx-background-color: #3db1ff;">
+            <HBox prefHeight="114.0" prefWidth="1024.0" style="-fx-background-color: #A0D3F2;">
                <children>
-                  <ImageView fitHeight="113.0" fitWidth="161.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/pizzero.png" />
-                     </image>
-                  </ImageView>
-                  <Label alignment="CENTER" prefHeight="51.0" prefWidth="1025.0" style="-fx-background-color: #3db1ff;" text="RESTAURANTE PANEL DE CONTROL" textAlignment="CENTER" textFill="WHITE">
-                     <padding>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                     </padding>
-                     <font>
-                        <Font name="System Bold" size="36.0" />
-                     </font>
-                  </Label>
-                  <ImageView fitHeight="113.0" fitWidth="161.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/pizzero.png" />
-                     </image>
-                  </ImageView>
+                  <Pane prefHeight="113.0" prefWidth="1028.0">
+                     <children>
+                        <ImageView fitHeight="113.0" fitWidth="161.0" layoutX="190.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/pizzero.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="145.0" fitWidth="323.0" layoutX="351.0" layoutY="-9.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/tituloDash.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="113.0" fitWidth="161.0" layoutX="674.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/pizzero.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
                </children>
             </HBox>
             <ScrollPane fitToWidth="true" prefHeight="657.0" prefWidth="1024.0" style="-fx-background-color: #005a96;">
@@ -130,7 +132,7 @@
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font></Button>
-                              <Button fx:id="btnGenerar" mnemonicParsing="false" onAction="#clicGenerarCuenta" prefHeight="140.0" prefWidth="160.0" styleClass="boton-pinguino" stylesheets="@../styles/styles.css" text="GENERAR CUENTA">
+                              <Button fx:id="btnGenerar" mnemonicParsing="false" onAction="#clicGenerarCuenta" prefHeight="140.0" prefWidth="160.0" styleClass="boton-pinguino" stylesheets="@../styles/styles.css" text="GENERAR TICKET">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font></Button>

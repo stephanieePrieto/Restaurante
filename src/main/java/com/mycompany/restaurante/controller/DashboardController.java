@@ -1,7 +1,9 @@
 package com.mycompany.restaurante.controller;
 
 import com.mycompany.restaurante.App;
+import com.mycompany.restaurante.dao.CuentaDAO;
 import com.mycompany.restaurante.modelo.pojo.Usuario;
+import java.io.File;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +15,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
 
 public class DashboardController {
@@ -107,8 +110,13 @@ public class DashboardController {
         stage.show();
     }
     
+    
+    
+    
+
+    
     @FXML
-private void clicGenerarCuenta(ActionEvent event) {
+    private void clicGenerarCuenta(ActionEvent event) {
     try {
         // 1. Cargamos el FXML de la pantalla que acabas de arreglar
         // Revisa que el nombre del archivo sea exacto (mayúsculas/minúsculas)
@@ -130,9 +138,10 @@ private void clicGenerarCuenta(ActionEvent event) {
         e.printStackTrace(); 
     }
 }
+
     
     @FXML
-private void clicCobro(ActionEvent event) {
+    private void clicCobro(ActionEvent event) {
     try {
         // 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RegistrarPago.fxml"));
@@ -152,8 +161,29 @@ private void clicCobro(ActionEvent event) {
         e.printStackTrace();
     }
     
-    
 }
+    
+        @FXML
+    private void btnIrFacturacion() {
+    try {
+        // Usamos el nuevo nombre sin acento
+        // Asegúrate de que la carpeta se llame 'fxml' en minúsculas si así lo pusiste
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Factura.fxml"));        
+        Parent root = loader.load();
+        Scene escena = new Scene(root);
+        Stage escenario = new Stage();
+        escenario.setTitle("Facturación - Pizzatron CP");
+        escenario.setScene(escena);
+        escenario.show();
+
+    } catch (IOException e) {
+        // Si entra aquí, te dirá exactamente qué falló
+        System.err.println("Error: No se encontró el archivo FXML en la ruta especificada.");
+        e.printStackTrace();
+    }
+}
+    
+  
 
 
 

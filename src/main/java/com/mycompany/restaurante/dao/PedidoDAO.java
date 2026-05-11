@@ -9,6 +9,12 @@ import java.util.List;
 public class PedidoDAO {
     private Connection conexion;
 
+    // Constructor vacío
+    public PedidoDAO() {
+        this.conexion = ConexionBD.conectar();
+    }
+
+    // Constructor con parámetro
     public PedidoDAO(Connection conexion) {
         this.conexion = conexion;
     }
@@ -89,6 +95,8 @@ public class PedidoDAO {
         }
         return lista;
     }
+    
+    
 
     public boolean actualizarEstadoPedido(int idPedido, String nuevoEstado) throws SQLException {
         String sql = "UPDATE pedidos SET estado = ? WHERE idPedido = ?";
@@ -98,4 +106,26 @@ public class PedidoDAO {
             return ps.executeUpdate() > 0;
         }
     }
+    
+    public int obtenerIdPedidoActivo(int idMesa) {
+        int idPedido = -1;
+        // Buscamos el pedido cuya mesa coincida y que NO esté pagado
+        String sql = "SELECT idPedido FROM pedidos WHERE idMesa = ? AND estado != 'Pagado' " +
+                     "ORDER BY fechaHora DESC LIMIT 1";
+
+        try (Connection con = ConexionBD.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            
+            ps.setInt(1, idMesa);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                idPedido = rs.getInt("idPedido");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al obtener pedido activo: " + e.getMessage());
+        }
+        return idPedido;
+    }
+
 }

@@ -1,75 +1,87 @@
 package com.mycompany.restaurante.controller;
 
+import com.mycompany.restaurante.App;
 import com.mycompany.restaurante.dao.CuentaDAO;
 import com.mycompany.restaurante.modelo.pojo.DetallePedido;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
-public class CalcularCuentaController {
+public class CalcularCuentaController implements Initializable {
 
-    @FXML private TextField txtMesa;
-    @FXML private TextField txtMesero;
+    @FXML private ComboBox<Integer> cbMesa;
+    @FXML private ComboBox<String> cbMesero;
     @FXML private TextField txtSubtotal;
     @FXML private TextField txtIva;
     @FXML private TextField txtTotal;
-    
-    // Configuración de la Tabla
-    @FXML private TableView<DetallePedido> tblConsumo;
-    @FXML private TableColumn<DetallePedido, String> colPlatillo;
-    @FXML private TableColumn<DetallePedido, Integer> colCantidad;
-    @FXML private TableColumn<DetallePedido, Double> colPrecio;
-    @FXML private TableColumn<DetallePedido, Double> colSubtotal;
 
-    private CuentaDAO dao = new CuentaDAO();
+    private CuentaDAO cuentaDAO = new CuentaDAO();
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // 1. Llenar mesas del 1 al 10
+        for (int i = 1; i <= 10; i++) {
+            cbMesa.getItems().add(i);
+        }
+
+        // 2. Llenar meseros con los IDs que me pasaste (2 y 6)
+        cbMesero.getItems().addAll("Juan Mesero (ID: 2)", "BegoPro (ID: 6)");
+    }
+    
+    
 
     @FXML
-    private void btnGenerarTicket(ActionEvent event) {
-        try {
-            int idMesa = Integer.parseInt(txtMesa.getText());
+    private void btnGenerarTicket() {
+        if (cbMesa.getValue() != null) {
+            int idMesa = cbMesa.getValue();
             
-            // 1. Obtener datos del consumo desde el DAO
-            // (Asumiendo que tu DAO devuelve una lista de objetos)
-            ObservableList<DetallePedido> detalles = dao.obtenerDetallesPorMesa(idMesa);
+            // Obtener el subtotal de la base de datos
+            double subtotal = cuentaDAO.obtenerSubtotalMesa(idMesa);
             
-            if (detalles.isEmpty()) {
-                mostrarAlerta("Sin Consumo", "No hay platillos registrados para la mesa " + idMesa);
-                return;
+            if (subtotal > 0) {
+                // Cálculos
+                
+                double iva = subtotal * 0.16;
+                double total = subtotal + iva;
+                
+                
+                
+                // Mostrar en la pantalla (Resumen de Pago)
+                txtSubtotal.setText(String.format("%.2f", subtotal));
+                txtIva.setText(String.format("%.2f", iva));
+                txtTotal.setText(String.format("%.2f", total));
+            } else {
+                mostrarAlerta("Sin Consumo", "La mesa " + idMesa + " no tiene pedidos pendientes.");
+                
             }
-
-            // 2. Llenar la tabla
-            colPlatillo.setCellValueFactory(new PropertyValueFactory<>("platillo"));
-            colCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
-            colPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
-            colSubtotal.setCellValueFactory(new PropertyValueFactory<>("subtotal"));
-            tblConsumo.setItems(detalles);
-
-            // 3. Hacer los cálculos
-            double subtotal = detalles.stream().mapToDouble(d -> d.getSubtotal()).sum();
-            double iva = subtotal * 0.16;
-            double total = subtotal + iva;
-
-            // 4. Mostrar en los TextField
-            txtSubtotal.setText(String.format("%.2f", subtotal));
-            txtIva.setText(String.format("%.2f", iva));
-            txtTotal.setText(String.format("%.2f", total));
-            
-            // Aquí podrías obtener también el nombre del mesero desde el DAO
-            txtMesero.setText(dao.obtenerNombreMesero(idMesa));
-
-        } catch (NumberFormatException e) {
-            mostrarAlerta("Error", "Ingresa un número de mesa válido.");
+        } else {
+            mostrarAlerta("Atención", "Por favor selecciona una mesa.");
         }
     }
 
     private void mostrarAlerta(String titulo, String msj) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(titulo);
-        alert.setHeaderText(null);
         alert.setContentText(msj);
         alert.showAndWait();
+    }
+        @FXML
+    void volverDashboard(ActionEvent event) {
+        try {
+            Parent root = App.getFXMLLoader("Dashboard").load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+        } catch (IOException ex) { ex.printStackTrace(); }
     }
 }

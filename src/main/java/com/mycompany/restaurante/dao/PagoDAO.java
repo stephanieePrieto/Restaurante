@@ -1,32 +1,65 @@
 package com.mycompany.restaurante.dao;
 import com.mycompany.restaurante.modelo.pojo.Pago;
+import com.mycompany.restaurante.modelo.sql.MySQLConnect;
 import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+
 
 
 public class PagoDAO {
     
-    public int insertarPago(Pago pago) {
-    String sql = "INSERT INTO pagos (total, metodoPago, idPedido) VALUES (?, ?, ?)";
+public boolean registrarPago(Pago pago, int idMesa) {
+    String sqlPago = "INSERT INTO pagos (total, metodoPago, idPedido) VALUES (?, ?, ?)";
+    String sqlMesa = "UPDATE mesa SET estado = 'Libre' WHERE idMesa = ?";
+    String sqlPedido = "UPDATE pedidos SET estado = 'Pagado' WHERE idPedido = ?";
 
-    try (Connection conn = ConexionBD.getConnection();
-         PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+    // 1. IMPORTANTE: Usamos tu nueva clase MySQLConnect
+    MySQLConnect mysql = new MySQLConnect();
+    Connection con = mysql.connection(); 
 
-        ps.setDouble(1, pago.getTotal());
-        ps.setString(2, pago.getMetodo());
-        ps.setInt(3, pago.getIdPedido());
-
-        ps.executeUpdate();
-
-        ResultSet rs = ps.getGeneratedKeys();
-        if (rs.next()) {
-            return rs.getInt(1); // id PagoAsegurado 
-        }
-
-    } catch (Exception e) {
-        e.printStackTrace();
+    // 2. Verificamos que la conexión no sea nula antes de hacer nada
+    if (con == null) {
+        System.err.println("¡ERROR! No se pudo establecer la conexión con MySQL.");
+        return false;
     }
 
-    return -1; // error
+    try {
+        con.setAutoCommit(false); // Ahora sí funcionará porque 'con' no es null
+
+        try (PreparedStatement psPago = con.prepareStatement(sqlPago);
+             PreparedStatement psMesa = con.prepareStatement(sqlMesa);
+             PreparedStatement psPedido = con.prepareStatement(sqlPedido)) {
+            
+            // Insertar el Pago
+            psPago.setDouble(1, pago.getTotal());
+            psPago.setString(2, pago.getMetodo());
+            psPago.setInt(3, pago.getIdPedido());
+            psPago.executeUpdate();
+
+            // Liberar la Mesa
+            psMesa.setInt(1, idMesa);
+            psMesa.executeUpdate();
+
+            // Finalizar el Pedido
+            psPedido.setInt(1, pago.getIdPedido());
+            psPedido.executeUpdate();
+
+            con.commit();
+            return true;
+        } catch (SQLException e) {
+            con.rollback();
+            e.printStackTrace();
+            return false;
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    } finally {
+        mysql.close(); // Siempre cerramos la conexión al terminar
+    }
 }
 }
 

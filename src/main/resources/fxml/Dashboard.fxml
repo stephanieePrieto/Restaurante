@@ -38,6 +38,7 @@
                               <Image url="@../img/pizzero.png" />
                            </image>
                         </ImageView>
+                        <Button fx:id="btnAsistencia" layoutX="881.0" layoutY="31.0" mnemonicParsing="false" onAction="#abrirAsistencia" styleClass="boton-enviar-chef" stylesheets="@../styles/styles.css" text="ASISTENCIA" />
                      </children>
                   </Pane>
                </children>
@@ -153,7 +154,7 @@
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font></Button>
-                              <Button fx:id="btnFacturacion" contentDisplay="TOP" mnemonicParsing="false" onAction="#btnIrFacturacion" prefHeight="140.0" prefWidth="160.0" styleClass="boton-pinguino" stylesheets="@../styles/styles.css" text="FACTURACIÓN">
+                              <Button fx:id="btnFacturacion" contentDisplay="TOP" mnemonicParsing="false" prefHeight="140.0" prefWidth="160.0" styleClass="boton-pinguino" stylesheets="@../styles/styles.css" text="FACTURACIÓN">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font></Button>

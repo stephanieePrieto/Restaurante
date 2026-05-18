@@ -10,7 +10,7 @@ public class ConexionBD {
         try {
             String url = "jdbc:mysql://localhost:3306/restaurante";
             String user = "root";
-            String password = "1234";
+            String password = "mandala1406S.";
 
             return DriverManager.getConnection(url, user, password);
 
@@ -21,11 +21,11 @@ public class ConexionBD {
     }
 
     static Connection getConnection() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     static Connection obtenerConexion() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
 }

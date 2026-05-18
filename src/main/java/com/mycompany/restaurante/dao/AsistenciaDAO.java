@@ -5,23 +5,29 @@ import com.mycompany.restaurante.modelo.sql.MySQLConnect;
 import java.sql.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import java.time.LocalDate;
 
 public class AsistenciaDAO {
+    
+    // Constructor vacío para que encaje con tu controlador actual
+    public AsistenciaDAO() {
+    }
 
-    /**
-     * Obtiene el historial completo de registros.
-     */
+    // Constructor con conexión (opcional, por si quieres seguir el estándar de tus otros DAOs)
+    public AsistenciaDAO(Connection con) {
+        // En este caso, como tu código usa MySQLConnect interno, este puede quedar vacío
+    }
+
     public ObservableList<Asistencia> obtenerAsistenciasHoy() {
         ObservableList<Asistencia> lista = FXCollections.observableArrayList();
         MySQLConnect mysql = new MySQLConnect();
         
-        // CORRECCIÓN 1: Quitamos el CURDATE() para que puedas ver todos tus registros de prueba, no solo los de hoy.
         String sql = "SELECT a.idAsistencia, e.usuario, a.fechaEntrada, a.fechaSalida, a.estado, a.horas_trabajadas " +
                      "FROM asistencias a INNER JOIN empleados e ON a.idEmpleado = e.idEmpleado " +
                      "ORDER BY a.fechaEntrada DESC";
                      
         try (Connection con = mysql.connection()) {
-            if (con == null) throw new SQLException("No se pudo conectar a la base de datos.");
+            if (con == null) return lista;
             try (PreparedStatement ps = con.prepareStatement(sql);
                  ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -37,36 +43,26 @@ public class AsistenciaDAO {
             }
         } catch (SQLException e) {
             System.err.println("Error en obtenerAsistenciasHoy: " + e.getMessage());
-        } finally {
-            mysql.close();
         }
         return lista;
     }
 
-    /**
-     * Procesa la asistencia validando que el ROL coincida con el usuario.
-     */
     public boolean procesarAsistenciaCompleta(String username, String rolSeleccionado, String horaEntrada, String horaSalida, String horasTotalesTexto) {
         MySQLConnect mysql = new MySQLConnect();
-        String fechaHoy = java.time.LocalDate.now().toString();
+        String fechaHoy = LocalDate.now().toString();
         
-        // 1. Lógica para determinar el estado
+        // Determinar estado
         String estadoFinal = "Incompleto";
-        try {
-            if (horasTotalesTexto != null && !horasTotalesTexto.isEmpty() && !horasTotalesTexto.equals("00:00 hrs")) {
-                String soloNumero = horasTotalesTexto.replace(" hrs", "").split(":")[0];
-                if (Integer.parseInt(soloNumero) >= 8) estadoFinal = "Cumplió";
-            } else {
-                estadoFinal = (horaSalida != null) ? "Finalizado" : "En turno";
-            }
-        } catch (Exception e) {
-            estadoFinal = "Error Formato";
+        if (horasTotalesTexto != null && !horasTotalesTexto.isEmpty() && !horasTotalesTexto.equals("00:00 hrs")) {
+             estadoFinal = "Cumplió";
+        } else {
+             estadoFinal = (horaSalida != null) ? "Finalizado" : "En turno";
         }
 
         try (Connection con = mysql.connection()) {
-            if (con == null) throw new SQLException("Conexión perdida con el servidor.");
+            if (con == null) return false;
 
-            // CORRECCIÓN 2: El INNER JOIN correcto para validar el rol usando la nueva estructura de la base de datos
+            // 1. Validar Usuario y Rol
             String sqlValidarRol = "SELECT e.idEmpleado FROM empleados e " +
                                    "INNER JOIN rol r ON e.idRol = r.idRol " +
                                    "WHERE e.usuario = ? AND r.nombre = ?";
@@ -74,14 +70,10 @@ public class AsistenciaDAO {
             try (PreparedStatement psVal = con.prepareStatement(sqlValidarRol)) {
                 psVal.setString(1, username);
                 psVal.setString(2, rolSeleccionado);
-                ResultSet rsVal = psVal.executeQuery();
-                if (!rsVal.next()) {
-                    System.err.println("Validación fallida: El usuario no coincide con el rol.");
-                    return false; // Detiene el proceso si el rol es inventado
-                }
+                if (!psVal.executeQuery().next()) return false; 
             }
 
-            // 3. Revisar si ya existe registro hoy para UPDATE o INSERT
+            // 2. Revisar si ya existe registro hoy
             String sqlCheck = "SELECT idAsistencia FROM asistencias a " +
                               "INNER JOIN empleados e ON a.idEmpleado = e.idEmpleado " +
                               "WHERE e.usuario = ? AND DATE(a.fechaEntrada) = CURDATE()";
@@ -118,17 +110,7 @@ public class AsistenciaDAO {
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Error SQL: " + e.getMessage());
             return false;
-        } finally {
-            mysql.close();
         }
-    }
-
-    /**
-     * Mantiene compatibilidad con el controlador.
-     */
-    public boolean registrarTurnoCompleto(String username, String rol, String horaEntrada, String horaSalida, String horasTotalesTexto) {
-        return procesarAsistenciaCompleta(username, rol, horaEntrada, horaSalida, horasTotalesTexto);
     }
 }

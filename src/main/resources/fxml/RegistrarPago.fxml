@@ -4,14 +4,10 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.Light.Distant?>
-<?import javafx.scene.effect.Lighting?>
-<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.restaurante.controller.RegistrarPagoController">
@@ -32,7 +28,7 @@
                   </ImageView>
                   <Pane layoutX="20.0" layoutY="16.0" prefHeight="336.0" prefWidth="618.0" style="-fx-opacity: .9; -fx-background-color: white; -fx-border-width: 12; -fx-background-radius: 25;">
                      <children>
-                        <Button fx:id="btnRegistrar" layoutX="402.0" layoutY="260.0" mnemonicParsing="false" onAction="#btnRegistrarPago" prefHeight="62.0" prefWidth="184.0" style="-fx-background-color: #0F168C;" text="Registrar Pago" textFill="WHITE">
+                        <Button fx:id="btnRegistrar" layoutX="402.0" layoutY="260.0" mnemonicParsing="false" onAction="#btnRegistrarPago" prefHeight="62.0" prefWidth="184.0" styleClass="boton-enviar-chef" stylesheets="@../styles/styles.css" text="Registrar Pago" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -59,29 +55,14 @@
                   </Pane>
                </children>
             </Pane>
-            <Button fx:id="btnVolver" layoutX="880.0" layoutY="31.0" mnemonicParsing="false" onAction="#volverDashboard" text="Volver">
+            <Button fx:id="btnVolver" layoutX="875.0" layoutY="24.0" mnemonicParsing="false" onAction="#volverDashboard" prefHeight="88.0" prefWidth="92.0" style="-fx-background-color: transparent;">
                <graphic>
-                  <ImageView fitHeight="38.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="62.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../img/flechs.png" />
                      </image>
                   </ImageView>
-               </graphic>
-               <effect>
-                  <Lighting>
-                     <bumpInput>
-                        <Shadow />
-                     </bumpInput>
-                     <light>
-                        <Light.Distant>
-                           <color>
-                              <Color red="0.6703703999519348" green="0.7308024764060974" blue="1.0" />
-                           </color>
-                        </Light.Distant>
-                     </light>
-                  </Lighting>
-               </effect>
-            </Button>
+               </graphic></Button>
          </children>
       </Pane>
    </children>

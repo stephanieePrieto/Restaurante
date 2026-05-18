@@ -11,7 +11,7 @@ public class MySQLConnect {
     private String port = "3306";
     private String db = "restaurante"; // Asegúrate que coincida con tu dump (minúsculas)
     private String username = "root";
-    private String password = "rayito28";
+    private String password = "mandala1406S.";
     private static MySQLConnect connect;
 
     public MySQLConnect() {

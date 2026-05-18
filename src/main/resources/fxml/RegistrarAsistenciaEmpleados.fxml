@@ -21,7 +21,7 @@
             <Image url="@../img/descarga.jpeg" />
          </image>
       </ImageView>
-      <Button fx:id="btnVolver" layoutX="84.0" layoutY="44.0" mnemonicParsing="false" onAction="#cerrarSesion" prefHeight="67.0" prefWidth="94.0" styleClass="boton-mas" stylesheets="@../styles/styles.css">
+      <Button fx:id="btnVolver" layoutX="84.0" layoutY="44.0" mnemonicParsing="false" onAction="#volverDashboard" prefHeight="67.0" prefWidth="94.0" styleClass="boton-mas" stylesheets="@../styles/styles.css">
          <graphic>
             <ImageView fitHeight="70.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true">
                <image>

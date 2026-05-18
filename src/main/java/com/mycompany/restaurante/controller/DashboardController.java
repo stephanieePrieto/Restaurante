@@ -149,10 +149,8 @@ public class DashboardController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RegistrarPago.fxml"));
         Parent root = loader.load();
 
-        // . Obtenemos la ventana (Stage) actual para cambiar el contenido
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         
-        // 3. Creamos la nueva escena y la mostramos
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setTitle("Registro de Pago - Cajero");

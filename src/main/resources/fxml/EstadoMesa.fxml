@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: 48C2F9;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.restaurante.controller.EstadoMesaController">
+   <children>
+      <VBox layoutX="224.0" layoutY="100.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #3498db;">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#volverDashboard" text="Volver" />
+                  <ImageView fitHeight="137.0" fitWidth="546.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../../../Downloads/a168d4100deeb8948edd06ae6b5f6363.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+            <TableView fx:id="tvMesas" prefHeight="200.0" prefWidth="200.0">
+              <columns>
+                <TableColumn fx:id="colNumero" prefWidth="109.60003662109375" text="No. Mesa" />
+                <TableColumn fx:id="colEstado" prefWidth="192.0" text="Estado " />
+                  <TableColumn prefWidth="300.7999267578125" text="Detalles" />
+              </columns>
+            </TableView>
+            <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #274AB3;">
+               <children>
+                  <Label prefHeight="38.0" prefWidth="338.0" text="Mesa Seleccionada:" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="25.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblMesaSeleccionada" prefHeight="38.0" prefWidth="257.0" text="Ninguna " textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="25.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="btnLiberar" mnemonicParsing="false" onAction="#btnLiberarMesaAction" prefHeight="56.0" prefWidth="274.0" style="-fx-background-color: #f5f5dc;; -fx-text-fill: black; -fx-font-weight: bold;" text="LIBERAR / MESA LIMPIA" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

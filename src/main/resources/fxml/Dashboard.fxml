@@ -136,7 +136,7 @@
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font></Button>
-                              <Button fx:id="btnEstado" mnemonicParsing="false" prefHeight="140.0" prefWidth="160.0" styleClass="boton-pinguino" stylesheets="@../styles/styles.css" text="ESTADO DE MESAS">
+                              <Button fx:id="btnEstado" mnemonicParsing="false" onAction="#abrirEstadoMesas" prefHeight="140.0" prefWidth="160.0" styleClass="boton-pinguino" stylesheets="@../styles/styles.css" text="ESTADO DE MESAS">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font></Button>

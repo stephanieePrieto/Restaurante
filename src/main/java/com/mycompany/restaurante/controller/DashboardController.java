@@ -67,6 +67,8 @@ public class DashboardController {
             n.setManaged(true);
         }
     }
+    
+    
 
     @FXML
     private void cerrarSesion(ActionEvent event) {
@@ -162,26 +164,25 @@ public class DashboardController {
     }
     
 }
-    
-        @FXML
-    private void btnIrFacturacion() {
-    try {
-        // Usamos el nuevo nombre sin acento
-        // Asegúrate de que la carpeta se llame 'fxml' en minúsculas si así lo pusiste
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Factura.fxml"));        
-        Parent root = loader.load();
-        Scene escena = new Scene(root);
-        Stage escenario = new Stage();
-        escenario.setTitle("Facturación - Pizzatron CP");
-        escenario.setScene(escena);
-        escenario.show();
-
-    } catch (IOException e) {
-        // Si entra aquí, te dirá exactamente qué falló
-        System.err.println("Error: No se encontró el archivo FXML en la ruta especificada.");
-        e.printStackTrace();
+    @FXML
+    private void btnIrFacturacion(javafx.event.ActionEvent event) {
+        try { 
+            cambiarPantalla(event, "Factura", "Facturación - Pizzatron CP"); 
+        } catch (IOException ex) { 
+            ex.printStackTrace(); 
+        }
     }
-}
+    
+    
+@FXML 
+    private void abrirEstadoMesas(ActionEvent event) {
+        try { 
+            // CAMBIADO: "EstadoMesa" en singular para que coincida con tu controlador
+            cambiarPantalla(event, "EstadoMesa", "Estado de Mesas"); 
+        } catch (IOException ex) { 
+            ex.printStackTrace(); 
+        }
+    }
     
   
 

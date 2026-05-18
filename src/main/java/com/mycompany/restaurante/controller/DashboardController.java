@@ -120,22 +120,18 @@ public class DashboardController {
     @FXML
     private void clicGenerarCuenta(ActionEvent event) {
     try {
-        // 1. Cargamos el FXML de la pantalla que acabas de arreglar
-        // Revisa que el nombre del archivo sea exacto (mayúsculas/minúsculas)
+ 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/GenerarCuenta.fxml"));
         Parent root = loader.load();
 
-        // 2. Obtenemos la ventana actual
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         
-        // 3. Cambiamos la escena a la de "Estado de Cuenta"
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setTitle("Generar Cuenta - Restaurante CP");
         stage.show();
         
     } catch (IOException e) {
-        // Esto te avisará en la consola si el archivo no existe o tiene errores
         System.err.println("Error al abrir la pantalla de cuenta: " + e.getMessage());
         e.printStackTrace(); 
     }

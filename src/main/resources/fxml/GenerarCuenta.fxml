@@ -5,23 +5,19 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.effect.Light.Distant?>
-<?import javafx.scene.effect.Lighting?>
-<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.restaurante.controller.CalcularCuentaController">   <children>
-      <ImageView fitHeight="813.0" fitWidth="1217.0" layoutX="-52.8" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-45.0" AnchorPane.leftAnchor="-53.0" AnchorPane.rightAnchor="-137.0" AnchorPane.topAnchor="0.0">
+      <ImageView fitHeight="769.0" fitWidth="1223.0" layoutX="-52.8" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-53.0" AnchorPane.rightAnchor="-3.0" AnchorPane.topAnchor="0.0">
          <image>
             <Image url="@../img/fondoCa.jpeg" />
          </image>
       </ImageView>
-      <Pane layoutX="2.0" layoutY="-1.0" prefHeight="768.0" prefWidth="1154.0" style="-fx-background-color: black; -fx-opacity: .40;" />
+      <Pane layoutX="2.0" layoutY="-1.0" prefHeight="769.0" prefWidth="1165.0" style="-fx-background-color: black; -fx-opacity: .40;" />
       <ImageView fitHeight="146.0" fitWidth="150.0" layoutX="10.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/generar%20cuenta.png" />
@@ -113,28 +109,14 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="btnVolver" layoutX="904.0" layoutY="55.0" mnemonicParsing="false" onAction="#volverDashboard" text="Volver">
+      <Button fx:id="btnVolver" layoutX="849.0" layoutY="51.0" mnemonicParsing="false" onAction="#volverDashboard" prefHeight="89.0" prefWidth="107.0" style="-fx-background-color: transparent;">
          <graphic>
-            <ImageView fitHeight="38.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="72.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../img/flechs.png" />
                </image>
             </ImageView>
          </graphic>
-         <effect>
-            <Lighting>
-               <bumpInput>
-                  <Shadow />
-               </bumpInput>
-               <light>
-                  <Light.Distant>
-                     <color>
-                        <Color red="0.6703703999519348" green="0.7308024764060974" blue="1.0" />
-                     </color>
-                  </Light.Distant>
-               </light>
-            </Lighting>
-         </effect>
       </Button>
    </children>
 </AnchorPane>

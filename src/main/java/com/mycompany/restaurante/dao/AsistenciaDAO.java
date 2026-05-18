@@ -5,17 +5,26 @@ import com.mycompany.restaurante.modelo.sql.MySQLConnect;
 import java.sql.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import java.time.LocalDate;
 
 public class AsistenciaDAO {
+    
+    // Constructor vacío para que encaje perfectamente con tu controlador actual
+    public AsistenciaDAO() {
+    }
+
+    // Constructor con conexión para mantener el estándar de los otros DAOs del proyecto
+    public AsistenciaDAO(Connection con) {
+    }
 
     /**
-     * Obtiene el historial completo de registros.
+     * Obtiene el historial completo de registros de asistencia sin filtrar por el día de hoy,
+     * permitiendo visualizar todos los registros de prueba en la tabla.
      */
     public ObservableList<Asistencia> obtenerAsistenciasHoy() {
         ObservableList<Asistencia> lista = FXCollections.observableArrayList();
         MySQLConnect mysql = new MySQLConnect();
         
-        // CORRECCIÓN 1: Quitamos el CURDATE() para que puedas ver todos tus registros de prueba, no solo los de hoy.
         String sql = "SELECT a.idAsistencia, e.usuario, a.fechaEntrada, a.fechaSalida, a.estado, a.horas_trabajadas " +
                      "FROM asistencias a INNER JOIN empleados e ON a.idEmpleado = e.idEmpleado " +
                      "ORDER BY a.fechaEntrada DESC";
@@ -45,17 +54,20 @@ public class AsistenciaDAO {
 
     /**
      * Procesa la asistencia validando que el ROL coincida con el usuario.
+     * Determina de manera automática si cumplió la jornada basándose en las horas calculadas.
      */
     public boolean procesarAsistenciaCompleta(String username, String rolSeleccionado, String horaEntrada, String horaSalida, String horasTotalesTexto) {
         MySQLConnect mysql = new MySQLConnect();
-        String fechaHoy = java.time.LocalDate.now().toString();
+        String fechaHoy = LocalDate.now().toString();
         
-        // 1. Lógica para determinar el estado
+        // Lógica inteligente para determinar el estado final del turno
         String estadoFinal = "Incompleto";
         try {
             if (horasTotalesTexto != null && !horasTotalesTexto.isEmpty() && !horasTotalesTexto.equals("00:00 hrs")) {
                 String soloNumero = horasTotalesTexto.replace(" hrs", "").split(":")[0];
-                if (Integer.parseInt(soloNumero) >= 8) estadoFinal = "Cumplió";
+                if (Integer.parseInt(soloNumero) >= 8) {
+                    estadoFinal = "Cumplió";
+                }
             } else {
                 estadoFinal = (horaSalida != null) ? "Finalizado" : "En turno";
             }
@@ -66,7 +78,7 @@ public class AsistenciaDAO {
         try (Connection con = mysql.connection()) {
             if (con == null) throw new SQLException("Conexión perdida con el servidor.");
 
-            // CORRECCIÓN 2: El INNER JOIN correcto para validar el rol usando la nueva estructura de la base de datos
+            // 1. Validar Usuario y Rol con la estructura correcta de la BD
             String sqlValidarRol = "SELECT e.idEmpleado FROM empleados e " +
                                    "INNER JOIN rol r ON e.idRol = r.idRol " +
                                    "WHERE e.usuario = ? AND r.nombre = ?";
@@ -74,14 +86,15 @@ public class AsistenciaDAO {
             try (PreparedStatement psVal = con.prepareStatement(sqlValidarRol)) {
                 psVal.setString(1, username);
                 psVal.setString(2, rolSeleccionado);
-                ResultSet rsVal = psVal.executeQuery();
-                if (!rsVal.next()) {
-                    System.err.println("Validación fallida: El usuario no coincide con el rol.");
-                    return false; // Detiene el proceso si el rol es inventado
+                try (ResultSet rsVal = psVal.executeQuery()) {
+                    if (!rsVal.next()) {
+                        System.err.println("Validación fallida: El usuario no coincide con el rol.");
+                        return false; 
+                    }
                 }
             }
 
-            // 3. Revisar si ya existe registro hoy para UPDATE o INSERT
+            // 2. Revisar si ya existe registro hoy para decidir entre UPDATE o INSERT
             String sqlCheck = "SELECT idAsistencia FROM asistencias a " +
                               "INNER JOIN empleados e ON a.idEmpleado = e.idEmpleado " +
                               "WHERE e.usuario = ? AND DATE(a.fechaEntrada) = CURDATE()";
@@ -89,12 +102,13 @@ public class AsistenciaDAO {
             int idExistente = -1;
             try (PreparedStatement psCheck = con.prepareStatement(sqlCheck)) {
                 psCheck.setString(1, username);
-                ResultSet rs = psCheck.executeQuery();
-                if (rs.next()) idExistente = rs.getInt("idAsistencia");
+                try (ResultSet rs = psCheck.executeQuery()) {
+                    if (rs.next()) idExistente = rs.getInt("idAsistencia");
+                }
             }
 
             if (idExistente != -1) {
-                // UPDATE
+                // UPDATE: El usuario ya registró entrada hoy, procedemos a actualizar datos (como la salida)
                 String sqlUpdate = "UPDATE asistencias SET fechaEntrada = ?, fechaSalida = ?, estado = ?, horas_trabajadas = ? WHERE idAsistencia = ?";
                 try (PreparedStatement psUp = con.prepareStatement(sqlUpdate)) {
                     psUp.setString(1, fechaHoy + " " + (horaEntrada != null ? horaEntrada : "00:00") + ":00");
@@ -105,7 +119,7 @@ public class AsistenciaDAO {
                     return psUp.executeUpdate() > 0;
                 }
             } else {
-                // INSERT
+                // INSERT: Primer registro del día para este empleado
                 String sqlInsert = "INSERT INTO asistencias (idEmpleado, fechaEntrada, fechaSalida, estado, horas_trabajadas) " +
                                    "VALUES ((SELECT idEmpleado FROM empleados WHERE usuario = ?), ?, ?, ?, ?)";
                 try (PreparedStatement psIn = con.prepareStatement(sqlInsert)) {
@@ -118,7 +132,7 @@ public class AsistenciaDAO {
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Error SQL: " + e.getMessage());
+            System.err.println("Error SQL en AsistenciaDAO: " + e.getMessage());
             return false;
         } finally {
             mysql.close();
@@ -126,7 +140,7 @@ public class AsistenciaDAO {
     }
 
     /**
-     * Mantiene compatibilidad con el controlador.
+     * Enlace de compatibilidad requerido por las llamadas del controlador.
      */
     public boolean registrarTurnoCompleto(String username, String rol, String horaEntrada, String horaSalida, String horasTotalesTexto) {
         return procesarAsistenciaCompleta(username, rol, horaEntrada, horaSalida, horasTotalesTexto);

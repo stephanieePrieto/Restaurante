@@ -1,8 +1,8 @@
 package com.mycompany.restaurante.dao;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
 
 public class ConexionBD {
 
@@ -10,22 +10,21 @@ public class ConexionBD {
         try {
             String url = "jdbc:mysql://localhost:3306/restaurante";
             String user = "root";
-            String password = "1234";
+            String password = "rayito28"; 
 
             return DriverManager.getConnection(url, user, password);
 
         } catch (SQLException e) {
-            System.out.println("Error de conexión");
+            System.out.println("Error de conexión a la BD: " + e.getMessage());
             return null;
         }
     }
 
-    static Connection getConnection() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public static Connection getConnection() {
+        return conectar();
     }
 
-    static Connection obtenerConexion() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public static Connection obtenerConexion() {
+        return conectar();
     }
-
 }

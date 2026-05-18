@@ -3,7 +3,9 @@ package com.mycompany.restaurante.controller;
 import com.mycompany.restaurante.App;
 import com.mycompany.restaurante.dao.AsistenciaDAO;
 import com.mycompany.restaurante.modelo.pojo.Asistencia;
+import com.mycompany.restaurante.modelo.sql.MySQLConnect;
 import java.io.IOException;
+import java.sql.Connection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -23,32 +25,29 @@ public class AsistenciaController {
 
     @FXML private TextField lblUsuario; 
     @FXML private ComboBox<String> CmbRol;
-    @FXML private ComboBox<String> CmbHoraEntrada;
-    @FXML private ComboBox<String> CmbHoraSalida;
+    @FXML private ComboBox<String> CmbHoraEntrada, CmbHoraSalida;
     @FXML private TextField txtHorasTotales;
     @FXML private Button btnRegistrarAsistencia;
 
     @FXML private TableView<Asistencia> tablaAsistencia; 
-    @FXML private TableColumn<Asistencia, String> columnaUsuario;
-    @FXML private TableColumn<Asistencia, String> columnaEntrada;
-    @FXML private TableColumn<Asistencia, String> columnaSalida;
-    @FXML private TableColumn<Asistencia, String> columnaEstado;
-    @FXML private TableColumn<Asistencia, String> columnaHorasTrabajadas; 
+    @FXML private TableColumn<Asistencia, String> columnaUsuario, columnaEntrada, columnaSalida, columnaEstado, columnaHorasTrabajadas; 
 
-    private AsistenciaDAO asistenciaDAO = new AsistenciaDAO();
+    private AsistenciaDAO asistenciaDAO;
     private ObservableList<Asistencia> listaAsistencias = FXCollections.observableArrayList();
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
     @FXML
     public void initialize() {
+        // Inicializamos el DAO de forma simple ya que el DAO maneja su propia conexión interna
+        asistenciaDAO = new AsistenciaDAO(); 
+
         configurarTabla();
         cargarDatosIniciales();
-        actualizarTablaDesdeBD();
-        
+        actualizarTablaDesdeBD(); // Cargamos los datos de la tabla al iniciar
+
+        // Listeners para que el cálculo sea automático al cambiar el ComboBox
         CmbHoraEntrada.setOnAction(e -> calcularHorasAutomatico());
         CmbHoraSalida.setOnAction(e -> calcularHorasAutomatico());
-
-        btnRegistrarAsistencia.setOnAction(this::registrarAsistencia);
     }
 
     private void configurarTabla() {
@@ -57,18 +56,17 @@ public class AsistenciaController {
         columnaSalida.setCellValueFactory(new PropertyValueFactory<>("salida"));
         columnaEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
         columnaHorasTrabajadas.setCellValueFactory(new PropertyValueFactory<>("horasTrabajadas"));
-        
         tablaAsistencia.setItems(listaAsistencias);
     }
     
     private void actualizarTablaDesdeBD() {
-        listaAsistencias.clear();
-        listaAsistencias.addAll(asistenciaDAO.obtenerAsistenciasHoy());
+        if (asistenciaDAO != null) {
+            listaAsistencias.setAll(asistenciaDAO.obtenerAsistenciasHoy());
+        }
     }
 
     private void cargarDatosIniciales() {
         CmbRol.getItems().addAll("Mesero", "Cajero", "Gerente", "Chef", "Recepcionista");
-
         LocalTime tiempo = LocalTime.of(7, 0);
         while (tiempo.isBefore(LocalTime.of(23, 1))) {
             String hora = tiempo.format(formatter);
@@ -88,9 +86,7 @@ public class AsistenciaController {
 
             if (salida.isAfter(entrada)) {
                 Duration duracion = Duration.between(entrada, salida);
-                long horas = duracion.toHours();
-                long minutos = duracion.toMinutesPart();
-                txtHorasTotales.setText(String.format("%02d:%02d hrs", horas, minutos));
+                txtHorasTotales.setText(String.format("%02d:%02d hrs", duracion.toHours(), duracion.toMinutesPart()));
             } else {
                 txtHorasTotales.setText("00:00 hrs");
             }
@@ -104,36 +100,40 @@ public class AsistenciaController {
             String rol = CmbRol.getValue(); 
             String entrada = CmbHoraEntrada.getValue();
             String salida = CmbHoraSalida.getValue();
-            String totales = txtHorasTotales.getText();
 
-            // --- VALIDACIONES DE INTERFAZ ---
-            if (usuario.isEmpty()) {
-                throw new IllegalArgumentException("¡Falta el nombre del pingüino!");
-            }
-            
-            if (rol == null || rol.isEmpty()) {
-                throw new IllegalArgumentException("Debes seleccionar un Rol.");
+            if (usuario.isEmpty() || rol == null || (entrada == null && salida == null)) {
+                mostrarAlerta("Campos incompletos", "Por favor completa el nombre, rol y al menos una hora.");
+                return;
             }
 
-            if (entrada == null && salida == null) {
-                throw new IllegalArgumentException("Selecciona al menos una hora para registrar.");
-            }
-
-            // Pasamos el ROL como parámetro para validar contra la BD
-            if (asistenciaDAO.procesarAsistenciaCompleta(usuario, rol, entrada, salida, totales)) {
+            if (asistenciaDAO.procesarAsistenciaCompleta(usuario, rol, entrada, salida, txtHorasTotales.getText())) {
                 actualizarTablaDesdeBD();
-                mostrarAlertaExito("¡Pingüino listo!", "La jornada de " + usuario + " se guardó correctamente.");
+                mostrarAlertaExito("Registro Exitoso", "Asistencia de " + usuario + " guardada.");
                 limpiarCampos();
             } else {
-                // Si el DAO regresa false, es porque el rol no coincide o el usuario no existe
-                mostrarAlerta("Acceso Denegado", "El usuario '" + usuario + "' no existe o no tiene el rol de '" + rol + "'.");
+                mostrarAlerta("Error de Validación", "El usuario no existe o el rol es incorrecto.");
             }
-
-        } catch (IllegalArgumentException e) {
-            mostrarAlerta("Datos incompletos", e.getMessage());
         } catch (Exception e) {
-            mostrarAlerta("Error inesperado", "Ocurrió un problema: " + e.getMessage());
-            e.printStackTrace();
+            mostrarAlerta("Error", "Error al procesar: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    private void volverDashboard(ActionEvent event) {
+        try {
+            FXMLLoader loader = App.getFXMLLoader("Dashboard");
+            Parent root = loader.load();
+            
+            // PASO DE SEGURIDAD: Re-configurar permisos al volver
+            DashboardController dashCtrl = loader.getController();
+            dashCtrl.configurarUsuario(App.usuarioLogueado);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Panel Principal");
+            stage.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -158,14 +158,10 @@ public class AsistenciaController {
         alert.setTitle(titulo);
         alert.setHeaderText(null);
         alert.setContentText(mensaje);
-        
-        DialogPane dialogPane = alert.getDialogPane();
-        dialogPane.setStyle("-fx-font-family: 'Arial'; -fx-font-size: 14px;"); 
-        
         alert.showAndWait();
     }
     
-        @FXML
+            @FXML
     private void cerrarSesion(ActionEvent event) {
         try {
             // 1. Cargamos el FXML de tu Login usando tu clase App
@@ -188,3 +184,4 @@ public class AsistenciaController {
         }
     }
 }
+

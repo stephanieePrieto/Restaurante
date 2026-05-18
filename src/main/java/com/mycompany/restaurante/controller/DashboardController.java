@@ -177,7 +177,6 @@ public class DashboardController {
 @FXML 
     private void abrirEstadoMesas(ActionEvent event) {
         try { 
-            // CAMBIADO: "EstadoMesa" en singular para que coincida con tu controlador
             cambiarPantalla(event, "EstadoMesa", "Estado de Mesas"); 
         } catch (IOException ex) { 
             ex.printStackTrace(); 

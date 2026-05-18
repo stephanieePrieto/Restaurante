@@ -9,41 +9,47 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: linear-gradient(to bottom right, #00BFFF, #0055A4);" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.restaurante.controller.ReporteVentasController">
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: linear-gradient(to bottom right, #00BFFF, #0055A4);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.restaurante.controller.ReporteVentasController">
    <children>
-      <Pane layoutX="112.0" layoutY="39.0" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #FFF8E1; -fx-background-radius: 25; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 15, 0, 0, 8);">
+      <Pane layoutX="57.0" layoutY="73.0" prefHeight="622.0" prefWidth="911.0" style="-fx-background-color: #FFF8E1; -fx-background-radius: 25; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 15, 0, 0, 8);">
          <children>
-            <Label layoutX="265.0" layoutY="30.0" text="REPORTE DE VENTAS" textFill="#ff8f00">
+            <Label layoutX="324.0" layoutY="20.0" text="REPORTE DE VENTAS" textFill="#ff8f00">
                <font>
-                  <Font name="System Bold" size="28.0" />
+                  <Font name="System Bold" size="26.0" />
                </font>
             </Label>
             
-            <DatePicker fx:id="dpFechaInicio" layoutX="50.0" layoutY="100.0" prefHeight="35.0" prefWidth="200.0" promptText="Fecha Inicio" style="-fx-background-radius: 5;" />
-            <DatePicker fx:id="dpFechaFin" layoutX="270.0" layoutY="100.0" prefHeight="35.0" prefWidth="200.0" promptText="Fecha Fin" style="-fx-background-radius: 5;" />
+            <DatePicker fx:id="dpFechaInicio" layoutX="50.0" layoutY="90.0" prefHeight="35.0" prefWidth="180.0" promptText="Fecha Inicio" style="-fx-border-color: #00BFFF; -fx-border-radius: 5;" />
+            <DatePicker fx:id="dpFechaFin" layoutX="250.0" layoutY="90.0" prefHeight="35.0" prefWidth="180.0" promptText="Fecha Fin" style="-fx-border-color: #00BFFF; -fx-border-radius: 5;" />
+            <Button layoutX="450.0" layoutY="90.0" mnemonicParsing="false" onAction="#clicBuscar" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #00BFFF; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" text="BUSCAR" />
+            <Button layoutX="570.0" layoutY="90.0" mnemonicParsing="false" onAction="#clicGenerarMensual" prefHeight="35.0" prefWidth="140.0" style="-fx-background-color: #0055A4; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" text="MES ACTUAL" />
             
-            <Button layoutX="490.0" layoutY="100.0" mnemonicParsing="false" onAction="#clicBuscar" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: #00BFFF; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;" text="BUSCAR" />
-            <Button layoutX="620.0" layoutY="100.0" mnemonicParsing="false" onAction="#clicGenerarMensual" prefHeight="35.0" prefWidth="130.0" style="-fx-background-color: #005a96; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;" text="MES ACTUAL" />
-            
-            <TableView fx:id="tblVentas" layoutX="50.0" layoutY="160.0" prefHeight="330.0" prefWidth="700.0" style="-fx-background-radius: 10;">
+            <TableView fx:id="tblVentas" layoutX="50.0" layoutY="150.0" prefHeight="350.0" prefWidth="420.0" style="-fx-background-radius: 10;">
               <columns>
-                <TableColumn fx:id="colFecha" prefWidth="348.0" style="-fx-background-color: #f49c30; -fx-text-fill: white;" text="Día / Periodo" />
-                <TableColumn fx:id="colTotal" prefWidth="350.0" style="-fx-background-color: #f49c30; -fx-text-fill: white;" text="Ingresos Totales ($)" />
+                <TableColumn fx:id="colFecha" prefWidth="210.0" style="-fx-background-color: #f49c30; -fx-text-fill: white;" text="Día / Mes" />
+                <TableColumn fx:id="colTotal" prefWidth="200.0" style="-fx-background-color: #f49c30; -fx-text-fill: white;" text="Total Ingresos ($)" />
               </columns>
             </TableView>
-            
-            <Label layoutX="420.0" layoutY="515.0" text="Total del Periodo Seleccionado: $" textFill="#263238">
+
+            <TableView fx:id="tblProductos" layoutX="490.0" layoutY="150.0" prefHeight="350.0" prefWidth="380.0" style="-fx-background-radius: 10;">
+              <columns>
+                <TableColumn fx:id="colPlatillo" prefWidth="250.0" style="-fx-background-color: #005a96; -fx-text-fill: white;" text="Platillo Más Vendido" />
+                <TableColumn fx:id="colCantidad" prefWidth="120.0" style="-fx-background-color: #005a96; -fx-text-fill: white;" text="Unidades" />
+              </columns>
+            </TableView>
+
+            <Label layoutX="140.0" layoutY="520.0" text="Total del Periodo Seleccionado:" textFill="#263238">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="lblTotalPeriodo" layoutX="700.0" layoutY="515.0" text="0.00" textFill="#00C853">
+            <Label fx:id="lblTotalPeriodo" layoutX="419.0" layoutY="520.0" text="\$0.00" textFill="#00c853">
                <font>
-                  <Font name="System Bold" size="20.0" />
+                  <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            
-            <Button layoutX="50.0" layoutY="530.0" mnemonicParsing="false" onAction="#clicVolver" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: linear-gradient(to bottom, #FF5252, #D32F2F); -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 15; -fx-cursor: hand;" text="VOLVER" />
+
+            <Button layoutX="50.0" layoutY="555.0" mnemonicParsing="false" onAction="#clicVolver" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: #E53935; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" text="VOLVER" />
          </children>
       </Pane>
    </children>

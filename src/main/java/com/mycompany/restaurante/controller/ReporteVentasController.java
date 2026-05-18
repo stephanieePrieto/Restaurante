@@ -1,5 +1,6 @@
 package com.mycompany.restaurante.controller;
 
+import com.mycompany.restaurante.modelo.pojo.ProductoMasVendido;
 import com.mycompany.restaurante.modelo.pojo.Usuario;
 import com.mycompany.restaurante.modelo.pojo.VentaReporte;
 import com.mycompany.restaurante.modelo.sql.MySQLConnect;
@@ -16,20 +17,34 @@ public class ReporteVentasController {
 
     @FXML private DatePicker dpFechaInicio;
     @FXML private DatePicker dpFechaFin;
+    @FXML private Label lblTotalPeriodo;
+    
+    // Tabla y columnas de ingresos
     @FXML private TableView<VentaReporte> tblVentas;
     @FXML private TableColumn<VentaReporte, String> colFecha;
     @FXML private TableColumn<VentaReporte, Double> colTotal;
-    @FXML private Label lblTotalPeriodo;
+    
+    // Tabla y columnas de productos
+    @FXML private TableView<ProductoMasVendido> tblProductos;
+    @FXML private TableColumn<ProductoMasVendido, String> colPlatillo;
+    @FXML private TableColumn<ProductoMasVendido, Integer> colCantidad;
 
     private ObservableList<VentaReporte> listaVentas;
+    private ObservableList<ProductoMasVendido> listaProductos;
 
     @FXML
     public void initialize() {
         colFecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
         colTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
         
+        colPlatillo.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        colCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidadVendida"));
+        
         listaVentas = FXCollections.observableArrayList();
+        listaProductos = FXCollections.observableArrayList();
+        
         tblVentas.setItems(listaVentas);
+        tblProductos.setItems(listaProductos);
     }
 
     @FXML
@@ -42,71 +57,103 @@ public class ReporteVentasController {
             return;
         }
 
-        String sql = "SELECT DATE(fecha) as dia, SUM(total) as sumaTotal FROM pagos " +
-                     "WHERE DATE(fecha) BETWEEN ? AND ? GROUP BY DATE(fecha) ORDER BY DATE(fecha) DESC";
+        String sqlIngresos = "SELECT DATE(fecha) as dia, SUM(total) as sumaTotal FROM pagos " +
+                             "WHERE DATE(fecha) BETWEEN ? AND ? GROUP BY DATE(fecha) ORDER BY DATE(fecha) DESC";
+                             
+        String sqlProductos = "SELECT p.nombre, SUM(dp.cantidad) as totalVendido FROM detallepedidos dp " +
+                              "INNER JOIN platillos p ON dp.idPlatillo = p.idPlatillo " +
+                              "INNER JOIN pagos pa ON dp.idPedido = pa.idPedido " +
+                              "WHERE DATE(pa.fecha) BETWEEN ? AND ? " +
+                              "GROUP BY p.nombre ORDER BY totalVendido DESC";
         
-        ejecutarConsulta(sql, inicio.toString(), fin.toString());
+        ejecutarConsultas(sqlIngresos, sqlProductos, inicio.toString(), fin.toString());
     }
 
     @FXML
     private void clicGenerarMensual(ActionEvent event) {
-        String sql = "SELECT DATE_FORMAT(fecha, '%Y-%m') as mes, SUM(total) as sumaTotal FROM pagos " +
-                     "WHERE MONTH(fecha) = MONTH(CURRENT_DATE()) AND YEAR(fecha) = YEAR(CURRENT_DATE()) " +
-                     "GROUP BY DATE_FORMAT(fecha, '%Y-%m')";
+        String sqlIngresos = "SELECT DATE_FORMAT(fecha, '%Y-%m') as mes, SUM(total) as sumaTotal FROM pagos " +
+                             "WHERE MONTH(fecha) = MONTH(CURRENT_DATE()) AND YEAR(fecha) = YEAR(CURRENT_DATE()) " +
+                             "GROUP BY DATE_FORMAT(fecha, '%Y-%m')";
+                             
+        String sqlProductos = "SELECT p.nombre, SUM(dp.cantidad) as totalVendido FROM detallepedidos dp " +
+                              "INNER JOIN platillos p ON dp.idPlatillo = p.idPlatillo " +
+                              "INNER JOIN pagos pa ON dp.idPedido = pa.idPedido " +
+                              "WHERE MONTH(pa.fecha) = MONTH(CURRENT_DATE()) AND YEAR(pa.fecha) = YEAR(CURRENT_DATE()) " +
+                              "GROUP BY p.nombre ORDER BY totalVendido DESC";
         
-        ejecutarConsultaMensual(sql);
+        ejecutarConsultasMensuales(sqlIngresos, sqlProductos);
     }
 
-    private void ejecutarConsulta(String sql, String inicio, String fin) {
+    private void ejecutarConsultas(String sqlIngresos, String sqlProductos, String inicio, String fin) {
         listaVentas.clear();
+        listaProductos.clear();
         double totalPeriodo = 0;
         MySQLConnect mysql = new MySQLConnect();
 
-        try (Connection con = mysql.connection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = mysql.connection()) {
             
-            ps.setString(1, inicio);
-            ps.setString(2, fin);
-            
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    String dia = rs.getString("dia");
-                    double suma = rs.getDouble("sumaTotal");
-                    listaVentas.add(new VentaReporte(dia, suma));
+            // 1. Obtener ingresos
+            try (PreparedStatement ps1 = con.prepareStatement(sqlIngresos)) {
+                ps1.setString(1, inicio);
+                ps1.setString(2, fin);
+                ResultSet rs1 = ps1.executeQuery();
+                while (rs1.next()) {
+                    double suma = rs1.getDouble("sumaTotal");
+                    listaVentas.add(new VentaReporte(rs1.getString("dia"), suma));
                     totalPeriodo += suma;
                 }
             }
+            
+            // 2. Obtener productos más vendidos
+            try (PreparedStatement ps2 = con.prepareStatement(sqlProductos)) {
+                ps2.setString(1, inicio);
+                ps2.setString(2, fin);
+                ResultSet rs2 = ps2.executeQuery();
+                while (rs2.next()) {
+                    listaProductos.add(new ProductoMasVendido(rs2.getString("nombre"), rs2.getInt("totalVendido")));
+                }
+            }
+            
         } catch (SQLException e) {
-            // AQUI ESTÁ LA MAGIA: Te dirá exactamente qué falla en MySQL
             mostrarAlerta("Error de SQL", "Fallo en la BD: " + e.getMessage());
         } finally {
             mysql.close();
         }
-        lblTotalPeriodo.setText(String.format("%.2f", totalPeriodo));
+        lblTotalPeriodo.setText("$" + String.format("%.2f", totalPeriodo));
     }
 
-    private void ejecutarConsultaMensual(String sql) {
+    private void ejecutarConsultasMensuales(String sqlIngresos, String sqlProductos) {
         listaVentas.clear();
+        listaProductos.clear();
         double totalPeriodo = 0;
         MySQLConnect mysql = new MySQLConnect();
 
-        try (Connection con = mysql.connection();
-             PreparedStatement ps = con.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        try (Connection con = mysql.connection()) {
             
-            while (rs.next()) {
-                String mes = rs.getString("mes");
-                double suma = rs.getDouble("sumaTotal");
-                listaVentas.add(new VentaReporte(mes, suma));
-                totalPeriodo += suma;
+            // 1. Obtener ingresos
+            try (PreparedStatement ps1 = con.prepareStatement(sqlIngresos);
+                 ResultSet rs1 = ps1.executeQuery()) {
+                while (rs1.next()) {
+                    double suma = rs1.getDouble("sumaTotal");
+                    listaVentas.add(new VentaReporte(rs1.getString("mes"), suma));
+                    totalPeriodo += suma;
+                }
             }
+            
+            // 2. Obtener productos más vendidos
+            try (PreparedStatement ps2 = con.prepareStatement(sqlProductos);
+                 ResultSet rs2 = ps2.executeQuery()) {
+                while (rs2.next()) {
+                    listaProductos.add(new ProductoMasVendido(rs2.getString("nombre"), rs2.getInt("totalVendido")));
+                }
+            }
+            
         } catch (SQLException e) {
-            // AQUI ESTÁ LA MAGIA: Te dirá exactamente qué falla en MySQL
             mostrarAlerta("Error de SQL", "Fallo en la BD: " + e.getMessage());
         } finally {
             mysql.close();
         }
-        lblTotalPeriodo.setText(String.format("%.2f", totalPeriodo));
+        lblTotalPeriodo.setText("$" + String.format("%.2f", totalPeriodo));
     }
 
     @FXML
@@ -119,7 +166,6 @@ public class ReporteVentasController {
             javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(url);
             javafx.scene.Parent root = loader.load();
 
-            // Le decimos al Dashboard que somos el Gerente para que vuelva a mostrar tus botones
             DashboardController controller = loader.getController();
             Usuario admin = new Usuario();
             admin.setRol("Gerente");
@@ -130,7 +176,6 @@ public class ReporteVentasController {
             escenaActual.setRoot(root);
 
         } catch (Exception ex) {
-            System.out.println("Error al volver al Dashboard.");
             ex.printStackTrace();
         }
     }

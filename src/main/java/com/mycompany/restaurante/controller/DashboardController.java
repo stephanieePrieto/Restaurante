@@ -167,7 +167,7 @@ public class DashboardController {
         }
     }
     
-    
+    //correcion ventanas 
 @FXML 
     private void abrirEstadoMesas(ActionEvent event) {
         try { 

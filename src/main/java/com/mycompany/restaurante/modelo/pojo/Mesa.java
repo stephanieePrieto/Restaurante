@@ -27,3 +27,4 @@ public class Mesa {
         this.estado = estado;
     }
 }
+//gets y sets 

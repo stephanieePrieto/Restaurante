@@ -1,14 +1,39 @@
-C:\Users\Stephanie\OneDrive\Documentos\UNIVERSIDAD\CUARTO SEMESTRE\PROCESOS DE DESARROLLO DE SOFTWARE\netBeansProjects4to\Restaurante\src\main\java\com\mycompany\restaurante\App.java
-C:\Users\Stephanie\OneDrive\Documentos\UNIVERSIDAD\CUARTO SEMESTRE\PROCESOS DE DESARROLLO DE SOFTWARE\netBeansProjects4to\Restaurante\src\main\java\com\mycompany\restaurante\controller\LoginController.java
-C:\Users\Stephanie\OneDrive\Documentos\UNIVERSIDAD\CUARTO SEMESTRE\PROCESOS DE DESARROLLO DE SOFTWARE\netBeansProjects4to\Restaurante\src\main\java\com\mycompany\restaurante\controller\PantallaCocinaController.java
-C:\Users\Stephanie\OneDrive\Documentos\UNIVERSIDAD\CUARTO SEMESTRE\PROCESOS DE DESARROLLO DE SOFTWARE\netBeansProjects4to\Restaurante\src\main\java\com\mycompany\restaurante\controller\RegistroPlatilloController.java
-C:\Users\Stephanie\OneDrive\Documentos\UNIVERSIDAD\CUARTO SEMESTRE\PROCESOS DE DESARROLLO DE SOFTWARE\netBeansProjects4to\Restaurante\src\main\java\com\mycompany\restaurante\dao\PedidoDAO.java
-C:\Users\Stephanie\OneDrive\Documentos\UNIVERSIDAD\CUARTO SEMESTRE\PROCESOS DE DESARROLLO DE SOFTWARE\netBeansProjects4to\Restaurante\src\main\java\com\mycompany\restaurante\dao\PlatilloDAO.java
-C:\Users\Stephanie\OneDrive\Documentos\UNIVERSIDAD\CUARTO SEMESTRE\PROCESOS DE DESARROLLO DE SOFTWARE\netBeansProjects4to\Restaurante\src\main\java\com\mycompany\restaurante\dao\UsuarioDAO.java
-C:\Users\Stephanie\OneDrive\Documentos\UNIVERSIDAD\CUARTO SEMESTRE\PROCESOS DE DESARROLLO DE SOFTWARE\netBeansProjects4to\Restaurante\src\main\java\com\mycompany\restaurante\modelo\pojo\Pedido.java
-C:\Users\Stephanie\OneDrive\Documentos\UNIVERSIDAD\CUARTO SEMESTRE\PROCESOS DE DESARROLLO DE SOFTWARE\netBeansProjects4to\Restaurante\src\main\java\com\mycompany\restaurante\modelo\pojo\Platillo.java
-C:\Users\Stephanie\OneDrive\Documentos\UNIVERSIDAD\CUARTO SEMESTRE\PROCESOS DE DESARROLLO DE SOFTWARE\netBeansProjects4to\Restaurante\src\main\java\com\mycompany\restaurante\modelo\pojo\Usuario.java
-C:\Users\Stephanie\OneDrive\Documentos\UNIVERSIDAD\CUARTO SEMESTRE\PROCESOS DE DESARROLLO DE SOFTWARE\netBeansProjects4to\Restaurante\src\main\java\com\mycompany\restaurante\modelo\sql\MySQLConnect.java
-C:\Users\Stephanie\OneDrive\Documentos\UNIVERSIDAD\CUARTO SEMESTRE\PROCESOS DE DESARROLLO DE SOFTWARE\netBeansProjects4to\Restaurante\src\main\java\com\mycompany\restaurante\utils\ConexionBD.java
-C:\Users\Stephanie\OneDrive\Documentos\UNIVERSIDAD\CUARTO SEMESTRE\PROCESOS DE DESARROLLO DE SOFTWARE\netBeansProjects4to\Restaurante\src\main\java\com\mycompany\restaurante\utils\Utils.java
-C:\Users\Stephanie\OneDrive\Documentos\UNIVERSIDAD\CUARTO SEMESTRE\PROCESOS DE DESARROLLO DE SOFTWARE\netBeansProjects4to\Restaurante\src\main\java\module-info.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\App.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\controller\AlmacenController.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\controller\AsistenciaController.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\controller\CalcularCuentaController.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\controller\DashboardController.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\controller\EstadoMesaController.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\controller\FacturaController.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\controller\LoginController.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\controller\OrdenesPendientesController.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\controller\PantallaPedidoController.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\controller\RegistrarPagoController.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\controller\RegistroEmpleadoController.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\controller\RegistroPlatilloController.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\controller\ReporteVentasController.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\controller\VentanaPizzatronController.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\dao\AlmacenDAO.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\dao\AsistenciaDAO.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\dao\ConexionBD.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\dao\CuentaDAO.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\dao\MesaDAO.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\dao\PagoDAO.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\dao\PedidoDAO.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\dao\PlatilloDAO.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\dao\TicketDAO.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\dao\UsuarioDAO.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\modelo\pojo\Asistencia.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\modelo\pojo\Cuenta.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\modelo\pojo\DetalleFactura.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\modelo\pojo\DetallePedido.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\modelo\pojo\Mesa.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\modelo\pojo\Pago.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\modelo\pojo\Pedido.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\modelo\pojo\Platillo.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\modelo\pojo\ProductoAlmacen.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\modelo\pojo\Usuario.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\modelo\pojo\VentaReporte.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\modelo\sql\MySQLConnect.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\com\mycompany\restaurante\utils\ConexionBD.java
+C:\Users\Angel\Documents\NetBeansProjects\Restaurante\src\main\java\module-info.java

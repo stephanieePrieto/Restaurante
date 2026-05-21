@@ -43,7 +43,7 @@ public class VentanaPizzatronController implements Initializable {
         gridMesas.getChildren().clear();
         String sql = "SELECT idMesa, numero, estado FROM mesa ORDER BY numero ASC";
 
-        try (Connection con = ConexionBD.obtenerConexion();
+        try (Connection con = ConexionBD.conectar();
              PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
@@ -120,7 +120,7 @@ public class VentanaPizzatronController implements Initializable {
             return;
         }
 
-        try (Connection con = ConexionBD.obtenerConexion()) {
+        try (Connection con = ConexionBD.conectar()) {
             // Actualizar la mesa seleccionada
             PreparedStatement ps = con.prepareStatement("UPDATE mesa SET estado = 'Ocupada' WHERE idMesa = ?");
             ps.setInt(1, idMesa);
@@ -155,7 +155,7 @@ public class VentanaPizzatronController implements Initializable {
 
     @FXML
     private void cancelarReserva() {
-        try (Connection con = ConexionBD.obtenerConexion()) {
+        try (Connection con = ConexionBD.conectar()) {
             con.prepareStatement("UPDATE mesa SET estado = 'Libre' WHERE estado = 'Ocupada'").executeUpdate();
             actualizarMapaMesas();
             mostrarAlerta("Sistema Reiniciado", "Todas las mesas vuelven a estar libres.");

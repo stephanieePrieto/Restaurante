@@ -57,7 +57,7 @@ public class LoginController {
 
     private void validarClienteBD(String idCliente, String telefono) {
         try {
-            Connection con = ConexionBD.obtenerConexion();
+            Connection con = ConexionBD.conectar();
             String sql = "SELECT * FROM clientes WHERE id_cliente = ? AND telefono = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, idCliente);

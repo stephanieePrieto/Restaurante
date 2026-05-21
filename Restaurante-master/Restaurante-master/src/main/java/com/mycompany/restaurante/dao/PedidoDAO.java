@@ -2,6 +2,10 @@ package com.mycompany.restaurante.dao;
 
 import com.mycompany.restaurante.modelo.pojo.Pedido;
 import com.mycompany.restaurante.modelo.pojo.Platillo;
+<<<<<<< HEAD:Restaurante-master/Restaurante-master/src/main/java/com/mycompany/restaurante/dao/PedidoDAO.java
+=======
+import com.mycompany.restaurante.utils.ConexionBD;
+>>>>>>> 1c10fc4 (proyecto funcionando correctamente):src/main/java/com/mycompany/restaurante/dao/PedidoDAO.java
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

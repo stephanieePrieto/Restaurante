@@ -1,0 +1,4 @@
+--patch-module
+com.mycompany.restaurante=_
+--add-reads
+com.mycompany.restaurante=ALL-UNNAMED

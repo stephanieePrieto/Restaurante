@@ -122,7 +122,7 @@ public class DashboardController {
     // --- MÉTODO PARA EL RECEPCIONISTA (CU-07) ---
     @FXML 
     private void abrirModificarReservaciones(ActionEvent event) {
-        try { cambiarPantalla(event, "ModificarReservacion", "Gestión de Reservaciones"); } catch (IOException ex) { ex.printStackTrace(); }
+        try { cambiarPantalla(event, "Reservacion", "Gestión de Reservaciones"); } catch (IOException ex) { ex.printStackTrace(); }
     }
     
     // --- MÉTODOS OPTIMIZADOS POR EL EQUIPO ---
@@ -157,6 +157,11 @@ public class DashboardController {
         stage.setScene(new Scene(root));
         stage.show();   
         try { cambiarPantalla(event, "Factura", "Facturación - Pizzatron CP"); } catch (IOException ex) { ex.printStackTrace(); }
+    }
+    
+        @FXML
+    private void abrirAsignarMesa(ActionEvent event) {
+        try { cambiarPantalla(event, "AsignarMesa", "Asignar Mesa - Pizzatron 3000"); } catch (IOException ex) { ex.printStackTrace(); }
     }
     
     @FXML

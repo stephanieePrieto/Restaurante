@@ -5,9 +5,9 @@ import com.mycompany.restaurante.modelo.sql.MySQLConnect;
 
 public class ConexionBD {
     
-    public static Connection obtenerConexion() {
+    public static Connection conectar() {
         // Ahora sí usamos tu conexión real a MySQL
-        MySQLConnect conexionReal = new MySQLConnect();
-        return conexionReal.connection();
+        MySQLConnect conectar = new MySQLConnect();
+        return conectar.connection();
     }
 }

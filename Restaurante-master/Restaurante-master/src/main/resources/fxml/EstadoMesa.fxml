@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: linear-gradient(to bottom, #99CCFF, #66B2FF);" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.restaurante.controller.EstadoMesaController">
+
+   <children>
+
+      <VBox spacing="15.0"
+            AnchorPane.bottomAnchor="0.0"
+            AnchorPane.leftAnchor="0.0"
+            AnchorPane.rightAnchor="0.0"
+            AnchorPane.topAnchor="0.0">
+
+         <padding>
+            <Insets bottom="20.0"
+                    left="20.0"
+                    right="20.0"
+                    top="10.0"/>
+         </padding>
+
+         <children>
+
+            <!-- ENCABEZADO -->
+            <HBox alignment="CENTER_LEFT"
+                  prefHeight="80.0"
+                  spacing="15.0">
+
+               <children>
+
+                  <Button fx:id="btnVolver"
+                          mnemonicParsing="false"
+                          onAction="#volverDashboard"
+                          prefHeight="45.0"
+                          prefWidth="55.0"
+                          style="-fx-background-color: #5271FF;
+                                 -fx-background-radius: 12;
+                                 -fx-border-color: #243882;
+                                 -fx-border-width: 3;
+                                 -fx-border-radius: 9;
+                                 -fx-cursor: hand;">
+
+                     <graphic>
+                        <SVGPath content="M24 12l-9-9v6h-11v6h11v6z"
+                                 fill="WHITE"
+                                 rotate="180.0"
+                                 scaleX="1.4"
+                                 scaleY="1.4"/>
+                     </graphic>
+
+                  </Button>
+
+                  <Label text="VOLVER"
+                         textFill="WHITE">
+
+                     <font>
+                        <Font name="Arial Black"
+                              size="16.0"/>
+                     </font>
+
+                  </Label>
+
+                  <HBox alignment="CENTER"
+                        HBox.hgrow="ALWAYS">
+
+                     <children>
+
+                        <Label text="ESTADO DE LAS MESAS"
+                               textFill="WHITE">
+
+                           <font>
+                              <Font name="Impact"
+                                    size="42.0"/>
+                           </font>
+
+                        </Label>
+
+                     </children>
+                  </HBox>
+
+               </children>
+            </HBox>
+
+            <!-- TABLA -->
+            <TableView fx:id="tvMesas"
+                       VBox.vgrow="ALWAYS"
+                       style="-fx-control-inner-background: #FFF2CC;
+                              -fx-background-color: #FFF2CC;
+                              -fx-border-color: #3D85C6;
+                              -fx-border-width: 3;
+                              -fx-border-radius: 10;
+                              -fx-background-radius: 10;">
+
+               <columns>
+
+                  <TableColumn fx:id="colNumero"
+                               prefWidth="120.0"
+                               text="No. Mesa"/>
+
+                  <TableColumn fx:id="colEstado"
+                               prefWidth="180.0"
+                               text="Estado"/>
+
+                  <TableColumn fx:id="colDetalles"
+                               prefWidth="650.0"
+                               text="Detalles"/>
+
+               </columns>
+
+            </TableView>
+
+            <!-- PANEL INFERIOR -->
+            <HBox alignment="CENTER_LEFT"
+                  prefHeight="90.0"
+                  style="-fx-background-color: #1A365D;
+                         -fx-background-radius: 15;
+                         -fx-border-color: #3D85C6;
+                         -fx-border-width: 2;
+                         -fx-border-radius: 15;">
+
+               <children>
+
+                  <Label text="Mesa Seleccionada:"
+                         textFill="WHITE">
+
+                     <font>
+                        <Font name="Arial Black"
+                              size="20.0"/>
+                     </font>
+
+                     <HBox.margin>
+                        <Insets left="25.0"/>
+                     </HBox.margin>
+
+                  </Label>
+
+                  <Label fx:id="lblMesaSeleccionada"
+                         text="[ Ninguna ]"
+                         textFill="WHITE">
+
+                     <font>
+                        <Font name="Arial Black"
+                              size="20.0"/>
+                     </font>
+
+                     <HBox.margin>
+                        <Insets left="15.0"/>
+                     </HBox.margin>
+
+                  </Label>
+
+                  <HBox alignment="CENTER_RIGHT"
+                        HBox.hgrow="ALWAYS">
+
+                     <padding>
+                        <Insets right="25.0"/>
+                     </padding>
+
+                     <children>
+
+                        <Button fx:id="btnLiberar"
+                                mnemonicParsing="false"
+                                onAction="#btnLiberarMesaAction"
+                                prefHeight="50.0"
+                                prefWidth="280.0"
+                                text="LIBERAR / MESA LIMPIA"
+                                style="-fx-background-color: #FFF2CC;
+                                       -fx-text-fill: #1A365D;
+                                       -fx-background-radius: 25;
+                                       -fx-border-color: #1A365D;
+                                       -fx-border-width: 2;
+                                       -fx-border-radius: 25;
+                                       -fx-cursor: hand;">
+
+                           <font>
+                              <Font name="Arial Black"
+                                    size="16.0"/>
+                           </font>
+
+                        </Button>
+
+                     </children>
+                  </HBox>
+
+               </children>
+            </HBox>
+
+         </children>
+      </VBox>
+
+   </children>
+</AnchorPane>

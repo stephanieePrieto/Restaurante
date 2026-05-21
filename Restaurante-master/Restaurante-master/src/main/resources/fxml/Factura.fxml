@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="720.0"
+            prefWidth="1024.0"
+            style="-fx-background-color: #1592c3;"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.mycompany.restaurante.controller.FacturaController">
+    <children>
+
+        <VBox spacing="15.0"
+              AnchorPane.topAnchor="15.0"
+              AnchorPane.bottomAnchor="15.0"
+              AnchorPane.leftAnchor="15.0"
+              AnchorPane.rightAnchor="15.0">
+
+            <children>
+
+                <HBox spacing="15.0">
+
+                    <children>
+
+                        <VBox prefWidth="500.0"
+                              spacing="10.0"
+                              style="-fx-background-color: #ffeeb2;
+                                     -fx-background-radius: 15;
+                                     -fx-border-radius: 15;
+                                     -fx-border-color: #a68c42;
+                                     -fx-border-width: 2;">
+
+                            <padding>
+                                <Insets top="15"
+                                        right="15"
+                                        bottom="15"
+                                        left="15"/>
+                            </padding>
+
+                            <children>
+
+                                <Label text="Datos del Cliente (Receptor)">
+                                    <font>
+                                        <Font size="20"/>
+                                    </font>
+                                </Label>
+
+                                <GridPane hgap="10"
+                                          vgap="10">
+
+                                    <children>
+
+                                        <Label text="RFC:"
+                                               GridPane.rowIndex="0"
+                                               GridPane.columnIndex="0"/>
+
+                                        <TextField fx:id="txtRFC"
+                                                   promptText="XXXX000000XXX"
+                                                   GridPane.rowIndex="0"
+                                                   GridPane.columnIndex="1"/>
+
+                                        <Label text="Razón Social:"
+                                               GridPane.rowIndex="1"
+                                               GridPane.columnIndex="0"/>
+
+                                        <TextField fx:id="txtNombre"
+                                                   GridPane.rowIndex="1"
+                                                   GridPane.columnIndex="1"/>
+
+                                        <Label text="Código Postal:"
+                                               GridPane.rowIndex="2"
+                                               GridPane.columnIndex="0"/>
+
+                                        <TextField fx:id="txtCP"
+                                                   GridPane.rowIndex="2"
+                                                   GridPane.columnIndex="1"/>
+
+                                        <Label text="Correo Electrónico:"
+                                               GridPane.rowIndex="3"
+                                               GridPane.columnIndex="0"/>
+
+                                        <TextField fx:id="txtCorreo"
+                                                   GridPane.rowIndex="3"
+                                                   GridPane.columnIndex="1"/>
+
+                                        <Label text="Uso CFDI:"
+                                               GridPane.rowIndex="4"
+                                               GridPane.columnIndex="0"/>
+
+                                        <ComboBox fx:id="cbUsoCFDI"
+                                                  prefWidth="300"
+                                                  GridPane.rowIndex="4"
+                                                  GridPane.columnIndex="1"/>
+
+                                        <Label text="Régimen Fiscal:"
+                                               GridPane.rowIndex="5"
+                                               GridPane.columnIndex="0"/>
+
+                                        <ComboBox fx:id="cbRegimenReceptor"
+                                                  prefWidth="300"
+                                                  GridPane.rowIndex="5"
+                                                  GridPane.columnIndex="1"/>
+
+                                    </children>
+
+                                </GridPane>
+
+                            </children>
+
+                        </VBox>
+
+                        <VBox prefWidth="450.0"
+                              spacing="10.0"
+                              style="-fx-background-color: #ffeeb2;
+                                     -fx-background-radius: 15;
+                                     -fx-border-radius: 15;
+                                     -fx-border-color: #a68c42;
+                                     -fx-border-width: 2;">
+
+                            <padding>
+                                <Insets top="15"
+                                        right="15"
+                                        bottom="15"
+                                        left="15"/>
+                            </padding>
+
+                            <children>
+
+                                <Label text="Datos de la Factura (Maestro)">
+                                    <font>
+                                        <Font size="20"/>
+                                    </font>
+                                </Label>
+
+                                <GridPane hgap="10"
+                                          vgap="10">
+
+                                    <children>
+
+                                        <Label text="Folio:"
+                                               GridPane.rowIndex="0"
+                                               GridPane.columnIndex="0"/>
+
+                                        <TextField fx:id="txtFolio"
+                                                   text="A-0045"
+                                                   editable="false"
+                                                   GridPane.rowIndex="0"
+                                                   GridPane.columnIndex="1"/>
+
+                                        <Label text="Fecha:"
+                                               GridPane.rowIndex="1"
+                                               GridPane.columnIndex="0"/>
+
+                                        <TextField fx:id="txtFecha"
+                                                   editable="false"
+                                                   GridPane.rowIndex="1"
+                                                   GridPane.columnIndex="1"/>
+
+                                        <Label text="Forma de Pago:"
+                                               GridPane.rowIndex="2"
+                                               GridPane.columnIndex="0"/>
+
+                                        <ComboBox fx:id="cbFormaPago"
+                                                  prefWidth="250"
+                                                  GridPane.rowIndex="2"
+                                                  GridPane.columnIndex="1"/>
+
+                                    </children>
+
+                                </GridPane>
+
+                            </children>
+
+                        </VBox>
+
+                    </children>
+
+                </HBox>
+
+                <VBox VBox.vgrow="ALWAYS"
+                      spacing="10"
+                      style="-fx-background-color: #ffeeb2;
+                             -fx-background-radius: 15;
+                             -fx-border-radius: 15;
+                             -fx-border-color: #a68c42;
+                             -fx-border-width: 2;">
+
+                    <padding>
+                        <Insets top="15"
+                                right="15"
+                                bottom="15"
+                                left="15"/>
+                    </padding>
+
+                    <children>
+
+                        <Label text="Conceptos del Consumo (Detalle)">
+                            <font>
+                                <Font size="20"/>
+                            </font>
+                        </Label>
+
+                        <TableView fx:id="tvFactura"
+                                   VBox.vgrow="ALWAYS">
+
+                            <columns>
+
+                                <TableColumn fx:id="colClave"
+                                             text="Clave Prod/Serv"
+                                             prefWidth="150"/>
+
+                                <TableColumn fx:id="colCantidad"
+                                             text="Cantidad"
+                                             prefWidth="100"/>
+
+                                <TableColumn fx:id="colUnidad"
+                                             text="Unidad"
+                                             prefWidth="150"/>
+
+                                <TableColumn fx:id="colPlatillo"
+                                             text="Descripción"
+                                             prefWidth="350"/>
+
+                                <TableColumn fx:id="colPrecio"
+                                             text="P. Unitario"
+                                             prefWidth="120"/>
+
+                                <TableColumn fx:id="colTotal"
+                                             text="Importe"
+                                             prefWidth="120"/>
+
+                            </columns>
+
+                        </TableView>
+
+                    </children>
+
+                </VBox>
+
+                <HBox spacing="30">
+
+                    <children>
+
+                        <VBox spacing="10">
+
+                            <children>
+
+                                <Label text="Totales Matemáticos">
+                                    <font>
+                                        <Font size="20"/>
+                                    </font>
+                                </Label>
+
+                                <GridPane hgap="10"
+                                          vgap="10">
+
+                                    <children>
+
+                                        <Label text="Subtotal"
+                                               GridPane.rowIndex="0"
+                                               GridPane.columnIndex="0"/>
+
+                                        <TextField fx:id="txtSubtotal"
+                                                   GridPane.rowIndex="0"
+                                                   GridPane.columnIndex="1"/>
+
+                                        <Label text="IVA (16%)"
+                                               GridPane.rowIndex="1"
+                                               GridPane.columnIndex="0"/>
+
+                                        <TextField fx:id="txtIVA"
+                                                   GridPane.rowIndex="1"
+                                                   GridPane.columnIndex="1"/>
+
+                                        <Label text="TOTAL GENERAL ($)"
+                                               GridPane.rowIndex="2"
+                                               GridPane.columnIndex="0"/>
+
+                                        <TextField fx:id="txtTotalGeneral"
+                                                   GridPane.rowIndex="2"
+                                                   GridPane.columnIndex="1"/>
+
+                                    </children>
+
+                                </GridPane>
+
+                            </children>
+
+                        </VBox>
+
+                        <VBox alignment="CENTER_RIGHT"
+                              spacing="15"
+                              HBox.hgrow="ALWAYS">
+
+                            <children>
+
+                                <Button fx:id="btnVolver"
+                                        text="Volver al Dashboard"
+                                        onAction="#volverDashboard"
+                                        prefWidth="250"
+                                        prefHeight="45"
+                                        style="-fx-background-color: #d9534f;
+                                               -fx-text-fill: white;
+                                               -fx-font-size: 14;
+                                               -fx-font-weight: bold;"/>
+
+                                <Button fx:id="btnGenerarFactura"
+                                        text="Generar Factura (PDF)"
+                                        onAction="#btnGenerarFacturaAction"
+                                        prefWidth="250"
+                                        prefHeight="45"
+                                        style="-fx-background-color: #5cb85c;
+                                               -fx-text-fill: white;
+                                               -fx-font-size: 14;
+                                               -fx-font-weight: bold;"/>
+
+                            </children>
+
+                        </VBox>
+
+                    </children>
+
+                </HBox>
+
+            </children>
+
+        </VBox>
+
+    </children>
+
+</AnchorPane>
